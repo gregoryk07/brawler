@@ -37,7 +37,7 @@ function drawVector(from_x = 0, from_y = 0, angle = 0, length = 100, color = "re
 
     v.appendChild(label)
 
-    label.style.transform = "rotate(-"+angle+"deg) translateY(-40px)";
+    label.style.transform = "rotate("+(-angle)+"deg) translateY(-40px)";
     label.style.position = "absolute"
 
     let arrow = document.createElement("div")
