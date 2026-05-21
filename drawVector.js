@@ -76,4 +76,20 @@ function modifyVector(num, newRot, newLen, newStartX, newStartY, newText, newCol
     if(newLen != undefined){
         vv.style.width = newLen - vector_arrow__tip_offset + "px";
     }
+    if(newStartX != undefined){
+        vv.style.left = newStartX + "px";
+    }
+    if(newStartY != undefined){
+        vv.style.top = newStartY + "px";
+    }
+    if(newText != undefined){
+        vv.children[0].innerText = newText
+    }
+    if(newColor != undefined){
+        vv.style.backgroundColor = newColor;
+        vv.children[1].style.backgroundColor = newColor
+    }
+}
+function removeVector(num){
+    document.getElementById("vector_arrow_" + num).remove();
 }
