@@ -23,3 +23,114 @@ body{
     bottom: 0;
     left: 0;
 }
+#serverList h1{
+    height: 100px;
+}
+#serverList{
+    padding: 30px;
+    position: fixed;
+    /* width: 80%;
+    height: 80dvh; */
+    background-color: gray;
+    left: 10%;
+    right: 10%;
+    bottom: 10%;
+    top: 10%;
+
+    border-radius: 20px;
+    border: 2px black solid;
+
+    color: white;
+    text-align: center;
+}
+#serverlistsection{
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: repeat(3);
+    
+    gap: 5px;
+}
+#serverlistsection>div{
+    background-color: darkgray;
+    border: orange 2px solid;
+    padding: 10px;
+}
+.serverlist_ul{
+    height: calc(100% - 74px);
+    background-color: rgb(65, 65, 65);
+    width: calc(100% - 10px);
+    padding: 5px;
+    margin: 0;
+    list-style: none;
+    max-height: 250px;
+    overflow: auto;
+}
+.serverlist_ul>h2{
+    /* font-size: 100%; */
+    height: 30px;
+    margin: 20px 0;
+
+}
+.serverlist_ul h2{
+    font-size: 100%;
+}
+.serverlist_ul span{
+    font-size: 60%;
+}
+.serverlist_ul>li{
+    background-color: rgb(63, 63, 63);
+    border: 2px solid orange;
+    padding: 5px;
+    margin: 10px;
+    cursor: pointer;
+}
+.serverlist_ul>li:hover{
+    background-color: rgb(77, 77, 77);
+
+}
+li.chosenServer{
+    background-color: rgb(87, 87, 87);
+}
+.chooseservermenubtn{
+    height: 40px;
+
+    background-color: rgb(63, 63, 63);
+    border: 2px solid orange;
+    padding: 5px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+div.chooseservermenubtn_section{
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    padding: 0px !important;
+    background-color: transparent !important;
+    border: none !important;
+    margin: 0;
+}
+.chooseservermenubtn_section>*{
+    flex: 1;
+}
+.chooseservermenubtn:hover{
+    background-color: rgb(77, 77, 77);
+}
+.chooseservermenubtn[disabled]{
+    cursor: not-allowed;
+    color: gray;
+}
+::-webkit-scrollbar{
+    width: 8px;
+}
+::-webkit-scrollbar-thumb{
+    background-color: rgba(0, 0, 0, 0);
+    border-radius: 10px;
+}
+*:hover>::-webkit-scrollbar-thumb{
+    background-color: rgba(0, 0, 0, 0.3);
+}
+::-webkit-scrollbar-thumb:hover{
+    background-color: rgba(0, 0, 0, 0.5);
+}

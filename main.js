@@ -1,6 +1,7 @@
 const $ = (id) => {
     return document.getElementById(id);
 }
+const $new = (name) => { return document.createElement(name); }
 
 
 
@@ -20,7 +21,7 @@ function gameLoop(timestamp) {
     // a consistent rhythm even if frames aren't perfectly timed.
     lastTime = timestamp - (elapsed % interval);
     const deltaTime = elapsed / 1000;
-    console.log("tick tock (dt: " + deltaTime + ")");
+    // console.log("tick tock (dt: " + deltaTime + ")");
     
     // update(deltaTime);
     // render();
