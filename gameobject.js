@@ -27,10 +27,10 @@ class gameobject{
     }
 
     renderSelf(){
-        var self = $("gameobject-" + this.id)
+        var self = $("#gameobject-" + this.id)
         if(self == null){
-            $("sprites").innerHTML += "<div id=\"gameobject-" + this.id + "\" class=\"characters\">";
-            self = $("gameobject-" + this.id);
+            $("#sprites").innerHTML += "<div id=\"gameobject-" + this.id + "\" class=\"characters\">";
+            self = $("#gameobject-" + this.id);
         }
         // console.log(self);
 

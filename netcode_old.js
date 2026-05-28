@@ -70,39 +70,35 @@ const customServers = [
 ]
 
 function updateServerList(){
-    official = $("#officialservers")
+    official = $("officialserverlist")
 
     official.innerText = ""
 
     for (let i = 0; i < officialServers.length; i++) {
         const element = officialServers[i];
-        li = $new("button");
+        li = $new("li");
 
         official.appendChild(li);
 
-        // h2 = $new("span");
+        h2 = $new("h2");
+
+        h2.innerText = element.name;
+
+        li.appendChild(h2);
 
         span = $new("span")
 
-        span.innerText = element.name;
+        li.appendChild(span);
 
-        li.appendChild(span)
+        span.innerText = element.region
+        if(element.precise_region.length > 0){
+            span.innerText += " - " + element.precise_region
+        }
+        if(element.ip.isSecure){
+            span.innerText += " (SSL SECURE)"
+        }
 
-        // li.appendChild(h2);
-
-        // span = $new("span")
-
-        // li.appendChild(span);
-
-        // span.innerText = element.region
-        // if(element.precise_region.length > 0){
-        //     span.innerText += " - " + element.precise_region
-        // }
-        // if(element.ip.isSecure){
-        //     span.innerText += " (SSL SECURE)"
-        // }
-
-        li.setAttribute("onclick", "chooseAndConnectToServer(officialServers["+i+"])");
+        li.setAttribute("onclick", "chooseServer(officialServers["+i+"])");
 
         if(chosenServer == element){
             li.classList.add("chosenServer")
@@ -110,45 +106,47 @@ function updateServerList(){
     }
 
 
-    custom = $("#customservers")
+    custom = $("customserverlist")
 
     custom.innerText = ""
 
     for (let i = 0; i < customServers.length; i++) {
         const element = customServers[i];
-        li = $new("button");
+        li = $new("li");
 
         custom.appendChild(li);
 
+        h2 = $new("h2");
+
+        h2.innerText = element.name;
+
+        li.appendChild(h2);
+
         span = $new("span")
 
-        span.innerText = element.name;
+        li.appendChild(span);
 
-        li.appendChild(span)
+        span.innerText = element.region
+        if(element.precise_region.length > 0){
+            span.innerText += " - " + element.precise_region
+        }
+        if(element.ip.isSecure){
+            span.innerText += " (SSL SECURE)"
+        }
 
-        // h2 = $new("h2");
-
-        // h2.innerText = element.name;
-
-        // li.appendChild(h2);
-
-        // span = $new("span")
-
-        // li.appendChild(span);
-
-        // span.innerText = element.region
-        // if(element.precise_region.length > 0){
-        //     span.innerText += " - " + element.precise_region
-        // }
-        // if(element.ip.isSecure){
-        //     span.innerText += " (SSL SECURE)"
-        // }
-
-        li.setAttribute("onclick", "chooseAndConnectToServer(customServers["+i+"])");
+        li.setAttribute("onclick", "chooseServer(customServers["+i+"])");
 
         if(chosenServer == element){
             li.classList.add("chosenServer")
         }
+    }
+
+    if(chosenServer == undefined){
+        $("chooseservermenubtn_connect").setAttribute("disabled", "")
+    }
+    else{
+        
+        $("chooseservermenubtn_connect").removeAttribute("disabled")
     }
 }
 
@@ -158,14 +156,29 @@ function chooseAndConnectToServer(server){
     updateServerList();
 }
 
+function chooseServer(server){
+    if(chosenServer == server){
+        if(chosenServer == undefined)
+        {
+            chosenServer = server;
+        }
+        else{
+            chosenServer = undefined
+        }
+    }
+    else{
+        chosenServer = server
+    }
+    updateServerList();
+}
+
 socket = new WebSocket("");
 
 chosenServer = undefined;
 
 var isConnectedToServer = false
 
-function connectToServer(reconnect=false){
-    if(!reconnect) reconnectCurrentTry = 0;
+function connectToServer(){
     if(isConnectedToServer) {
         console.warn("ALREADY CONNECTED TO A SERVER, ABORTING");
         return;
@@ -185,8 +198,6 @@ function connectToServer(reconnect=false){
     console.log(addr);
 
     socket = new WebSocket(addr);
-    
-    $("#mainmenucontainer").hidden = true;
     isConnectedToServer = true;
     
     socket.onmessage = socketOnMsg
@@ -197,32 +208,21 @@ function connectToServer(reconnect=false){
     
     socket.onerror = socketOnError;
 
-
 }
 function socketOnMsg(e) {
-    // console.log(e);
-    console.log("UPDATE");
+    console.log(e);
 }
 function socketOnOpen(e) {
     console.log("SOCKET OPEN")
-    reconnectCurrentTry = 0;
 }
 function socketOnClose(e) {
     console.log("SOCKET CLOSE")
     isConnectedToServer = false;
-    $("#mainmenucontainer").hidden = false;
+    connectToServer();
 }
 function socketOnError(e) {
     isConnectedToServer = false;
-    console.error(e);
-    if(reconnectMaxTries > reconnectCurrentTry++);
-    connectToServer(reconnect = true);
-}
-var reconnectMaxTries = 5;
-var reconnectCurrentTry = 0;
-function disconnectFromServer(){
-    isConnectedToServer = false;
-    socket.close();
+    console.error(e)
 }
 updateServerList();
 // connectToServer()

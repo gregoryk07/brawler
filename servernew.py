@@ -96,7 +96,7 @@ async def main():
             except Exception as ex:
                 print(ex)
             
-            await asyncio.sleep(10)
+            await asyncio.sleep(0.1)
 
 if __name__ == "__main__":
     try:

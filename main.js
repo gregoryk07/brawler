@@ -1,13 +1,12 @@
-const $ = (id) => {
-    return document.getElementById(id);
+function MathLerp(a, b ,t){
+    return a + t * (b - a);
 }
-const $new = (name) => { return document.createElement(name); }
-
 
 
 let lastTime = 0;
 var fpsLimit = 30;
 var runLoop = true;
+let prevfps = fpsLimit;
 
 function gameLoop(timestamp) {
     var interval = 1000 / fpsLimit;
@@ -29,8 +28,10 @@ function gameLoop(timestamp) {
     gameobjects.forEach((el) => {
         el.update({"deltaTime" : deltaTime});
     })
+    curfps = (Math.floor(1 / deltaTime) / 1)
 
-    $("stats").innerHTML = "FPS: " + (Math.floor(1 / deltaTime) / 1);
+    $("#stats").innerHTML = "FPS: " + Math.round(MathLerp(prevfps, curfps, 0.8 * deltaTime));
+    prevfps = MathLerp(prevfps, curfps, 0.8 * deltaTime);
   }
 
   // 3. Always request the next frame as fast as the monitor allows
