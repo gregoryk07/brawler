@@ -140,10 +140,13 @@ nav#servermenu>button>span{
     transition-duration: 200ms;
     border: none;
 }
-.serverlistmenu>button:hover, .serverlistmenu>button.selectedMenu{
-    color: black;
-    background-position: 0;
-    transition-duration: 400ms;
+.serverlistmenu>button:hover, .serverlistmenu>button.selectedMenu, nav>button.selectedMenuController{
+    color: black !important;
+    background-position: 0 !important;
+    transition-duration: 400ms !important;
+}
+nav>button.selectedMenuController{
+    outline: 2px white solid;
 }
 .serverlistmenu>button>span{
     margin-left: 50px;

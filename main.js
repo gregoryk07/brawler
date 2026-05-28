@@ -28,6 +28,11 @@ function gameLoop(timestamp) {
     gameobjects.forEach((el) => {
         el.update({"deltaTime" : deltaTime});
     })
+
+
+    // Input.runInput()
+
+
     curfps = (Math.floor(1 / deltaTime) / 1)
 
     $("#stats").innerHTML = "FPS: " + Math.round(MathLerp(prevfps, curfps, 0.8 * deltaTime));

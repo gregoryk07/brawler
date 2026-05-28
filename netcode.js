@@ -159,6 +159,7 @@ function chooseAndConnectToServer(server){
 }
 
 socket = new WebSocket("");
+socket.close();
 
 chosenServer = undefined;
 
