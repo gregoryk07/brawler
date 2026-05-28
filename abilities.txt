@@ -1,0 +1,36 @@
+1. Dash
+- simple dash forward
+2. Grapple:
+- Can pull players to platforms
+- If aimed at another player, pulls that player to the user
+3. Bow:
+- shoots arrow forward, affected by gravity
+4. Gun:
+- shoots forward, not affected by gravity
+5. Ball:
+- makes player immune to damage
+- kill any player that comes in contact with the user
+- takes away control from the player for the duration of the ability
+6. Smoke cloud:
+- obscures players that are inside of it
+- upon coming in contact with any explosive or fire attack, it and all connected smoke clouds explode
+7. Teleport sphere:
+- throws a sphere that sticks to tiles
+- if the sphere hits a player it switches the positions of the user and the target
+- upon using the ability again, teleport the user to the sphere while teleporting all players from nearby the sphere to the users previous location
+8. Rocket boost:
+- boosts the user upwards while shooting an explosive rocket projectile towards the ground
+9. Charge:
+- upon activation charge the ability for for X seconds. Upon the charge being completed, damage all players in a radius around the user
+10. Platform:
+- creates a small platform above he user
+- the platform is removed upon a second use of the ability
+11. Invis:
+- upon activation, the user becomes invisible for X seconds or until they use another ability
+12. Ground Slam:
+- the user drops to the ground, damaging all players below them
+13. Shield:
+- deflects any projectile-based attack back to the user
+14. Flame sphere:
+- upon acivation places a flame sphere at the users location
+- using the ability again, shoots a fire projectile from the sphere in the direction that the user is aiming, removing the sphere after
