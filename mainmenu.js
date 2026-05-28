@@ -98,6 +98,25 @@ function clearServerMenuSelection(){
     $("#customservers").style.bottom = "-100vh";
     $("#officialservers").style.bottom = "-100vh";
 }
+function mainCredits(){
+    // console.error("CALL");
+    if($("#mainmenu").children[3].classList.contains("selectedMenu"))
+    {
+        clearServerMenuSelection();
+        $("#creditsmenu").style.left = "-160px";
+        $("#mainmenu").children[3].classList.remove("selectedMenu")
+        mainmenuoptions = [3];
+        // console.log("A")
+
+    }
+    else{
+        $("#creditsmenu").style.left = "240px";
+        $("#mainmenu").children[3].classList.add("selectedMenu")
+        mainmenuoptions = [3, 0]
+        // console.log("AA")
+
+    }
+}
 var mainmenuoptions = [];
 addEventListener("dpad-down", (e) => {
     handleMainMenu({ direction: {x: 0, y: -1} })
@@ -106,14 +125,16 @@ addEventListener("dpad-up", (e) => {
     handleMainMenu({ direction: {x: 0, y: 1} })
 })
 addEventListener("menu-submit", (e) => {
-    console.log("SUBMIT")
+    // console.log("SUBMIT")
     handleMainMenu({ click: true })
 })
 addEventListener("menu-back", (e) => {
-    console.log("SUBMIT")
+    // console.log("SUBMIT")
     handleMainMenu({ back: true })
 })
+var isMainMenuVisible = true;
 function handleMainMenu({ direction = {x: 0, y: 0}, click = false, back = false } = {}){
+    if(!isMainMenuVisible) return;
     // console.log(click);
     if(direction.x > 0) direction.x = 1;
     if(direction.x < 0) direction.x = -1;
@@ -135,15 +156,24 @@ function handleMainMenu({ direction = {x: 0, y: 0}, click = false, back = false 
     if (mainmenuoptions.length <= 0) {
         mainmenuoptions = [0]
     }
-    var handlemainmenu_menu = "mainmenu"
+    var handlemainmenu_menu = "NONE"
     // console.error(mainmenuoptions.length)
     switch (mainmenuoptions.length) {
         case 2:
-            switch (mainmenuoptions[1]) {
+            switch (mainmenuoptions[0]) {
                 case 0:
-                    handlemainmenu_menu = "servermenu"
+                    switch (mainmenuoptions[1]) {
+                        case 0:
+                            handlemainmenu_menu = "servermenu"
+                            break;
+                    }
+                    break;
+            
+                case 3:
+                    
                     break;
             }
+            
             break;
         case 3:
             // console.warn(mainmenuoptions[2])
@@ -159,10 +189,11 @@ function handleMainMenu({ direction = {x: 0, y: 0}, click = false, back = false 
             }
             break;
     
-        default:
+        case 1:
             handlemainmenu_menu = "mainmenu"
             break;
     }
+    if(handlemainmenu_menu == "NONE") return
     let mainmenubtns = $("#"+handlemainmenu_menu).children;
     lastmainmenubtn = 0;
     for (let i = 0; i < mainmenubtns.length; i++) {

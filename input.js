@@ -59,7 +59,9 @@ var Input = {
         }
     },
     handleInputKeyboardDown(e){
+        // e.preventDefault();
         // console.log("DOWN " + e.code)
+        if(checkIfKeyPresent(Input.settings.keyboard, e.code)) e.preventDefault();
         Input.inputData[Input.settings.keyboard[e.code]] = true;
         dispatchEvent(new CustomEvent(Input.settings.keyboard[e.code], { detail: {
             timestamp: new Date(Date.now()),
@@ -89,4 +91,7 @@ onkeyup = Input.handleInputKeyboardUp;
 // https://stackoverflow.com/questions/9907419/how-to-get-a-key-in-a-javascript-object-by-its-value
 function getKeyByValue(object, value) {
     return Object.keys(object).find(key => object[key] === value);
+}
+function checkIfKeyPresent(object, key){
+    return Object.keys(object).indexOf(key) >= 0
 }
