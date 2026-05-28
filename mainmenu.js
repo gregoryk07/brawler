@@ -19,6 +19,7 @@ const $new = (tagname) => {
 }
 
 function mainPlayOnline(){
+    // console.error("CALL");
     if($("#mainmenu").children[0].classList.contains("selectedMenu"))
     {
         clearServerMenuSelection();
@@ -37,6 +38,8 @@ function mainPlayOnline(){
     }
 }
 function serverMenuPlayOfficial(){
+    
+    // console.error("CALL");
     if($("#servermenu").children[0].classList.contains("selectedMenu"))
     {
         $("#officialservers").style.top = "100vh";
@@ -59,6 +62,7 @@ function serverMenuPlayOfficial(){
     }
 }
 function serverMenuPlayCustom(){
+    // console.error("CALL");
     if($("#servermenu").children[1].classList.contains("selectedMenu"))
     {
         $("#customservers").style.top = "100vh";
@@ -66,7 +70,7 @@ function serverMenuPlayCustom(){
         $("#customservers").style.left = "530px";
         $("#servermenu").children[1].classList.remove("selectedMenu")
 
-        mainmenuoptions = [0, 1]
+        mainmenuoptions = [0, 0]
     }
     else{
         clearServerMenuSelection();
@@ -75,7 +79,7 @@ function serverMenuPlayCustom(){
         $("#customservers").style.bottom = "0";
         $("#servermenu").children[1].classList.add("selectedMenu")
 
-        mainmenuoptions = [0, 1, 1]
+        mainmenuoptions = [0, 0, 1]
 
     }
 }
