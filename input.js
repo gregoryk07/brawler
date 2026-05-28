@@ -23,6 +23,28 @@ var Input = {
         "open-chat": false,
         "submit": false
     },
+    gamepadInput: {
+        "dpad-left": false,
+        "dpad-right": false,
+        "dpad-up": false,
+        "dpad-down": false,
+        "jump": false,
+        "throw": false,
+        "menu-back": false,
+        "open-chat": false,
+        "submit": false
+    },
+    lastGamepadInput: {
+        "dpad-left": false,
+        "dpad-right": false,
+        "dpad-up": false,
+        "dpad-down": false,
+        "jump": false,
+        "throw": false,
+        "menu-back": false,
+        "open-chat": false,
+        "submit": false
+    },
     settings: {
         keyboard: {
             "KeyA": "dpad-left",
@@ -50,7 +72,12 @@ var Input = {
         Input.inputData[Input.settings.keyboard[e.code]] = false;
     },
     handleInputGamepad(){
-
+        gamepads = navigator.getGamepads();
+        for (let i = 0; i < gamepads.length; i++) {
+            const gm = gamepads[i];
+            if(gm == null) continue;
+            console.log(gm);
+        }
     },
     getCurrentBindings(){
 
