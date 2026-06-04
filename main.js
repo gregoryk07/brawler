@@ -43,6 +43,6 @@ function gameLoop(timestamp) {
   if(runLoop)
   requestAnimationFrame(gameLoop);
 }
-a = new gameobject(); 
+// a = new gameobject(); 
 a.characterid = 0
 requestAnimationFrame(gameLoop);
