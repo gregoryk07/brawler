@@ -44,5 +44,5 @@ function gameLoop(timestamp) {
   requestAnimationFrame(gameLoop);
 }
 // a = new gameobject(); 
-a.characterid = 0
+// a.characterid = 0
 requestAnimationFrame(gameLoop);
