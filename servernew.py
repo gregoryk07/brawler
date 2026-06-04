@@ -97,6 +97,7 @@ async def main():
                 print(ex)
             
             await asyncio.sleep(0.1)
+            # await asyncio.sleep(2)
 
 if __name__ == "__main__":
     try:

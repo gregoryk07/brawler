@@ -3,6 +3,8 @@ nextid = 0;
 
 class gameobject{
     id = -1;
+    nickname = "";
+    uuid = "";
     position = {
         x: 0,
         y: 0
@@ -51,6 +53,10 @@ class gameobject{
     selectedAnimation = "idle_right";
 
     animationFrameTimeSpan = 0.5;
+
+    setUUID(uuid){
+        this.uuid = uuid;
+    }
     
     constructor(){
         console.log("CREATED");

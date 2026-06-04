@@ -4,6 +4,8 @@ const ip_isSecure = false;
 
 const ip_port = "8765"
 
+var networkPlayers = new Set();
+
 const officialServers = [
     {
         region: "local",
@@ -202,18 +204,82 @@ function connectToServer(reconnect=false){
 }
 function socketOnMsg(e) {
     // console.log(e);
-    console.log("UPDATE");
+    // console.log("UPDATE");
+    if(JSON.parse(e.data).action == "update")
+    {
+
+        newPlayers = JSON.parse(e.data).players;
+
+        notUsed = new Set();
+
+        networkPlayers.entries().forEach(element => {
+            notUsed.add(element[0])
+        });
+        
+        for (let i = 0; i < newPlayers.length; i++) {
+            const newPlayer = newPlayers[i];
+            
+            uuid = newPlayer.id;
+            // console.log(uuid);
+            found = null;
+            networkPlayers.entries().forEach(element => {
+                if(element[0].uuid == uuid)
+                {
+                    found = element[0];
+                    // console.error("AAA")
+                    notUsed.delete(element[0]);
+                }
+            });
+            console.warn(notUsed.size)
+            // notUsed.entries().forEach(element => {
+            //     if(element[0].uuid == uuid)
+            //     {
+            //         // found = element;
+            //         // notUsed.delete(element);
+            //         console.warn(element[0].uuid + "\n"+uuid)
+            //         // console.error("AA");
+            //     }
+            // });
+            if(found == null || found == undefined){
+                console.warn("CREATING NEW!");
+                let a = new gameobject();
+                a.setUUID(uuid);
+                networkPlayers.add(a);
+                found = a;
+            }
+            found.characterid = newPlayer.hero;
+            found.nickname = newPlayer.nickname;
+            found.position = {
+                x: newPlayer.position.x,
+                y: newPlayer.position.y
+            }
+            // console.log(found);
+        }
+        notUsed.entries().forEach(element => {
+            // console.log(element);
+            element[0].destroy();
+            notUsed.delete(element);
+        });
+        console.log(notUsed.size)
+    }
+}
+
+function clearNetworkPlayers(){
+    networkPlayers.clear();
 }
 function socketOnOpen(e) {
+    clearNetworkPlayers();
     console.log("SOCKET OPEN")
     reconnectCurrentTry = 0;
 }
 function socketOnClose(e) {
+    clearNetworkPlayers();
     console.log("SOCKET CLOSE")
     isConnectedToServer = false;
     $("#mainmenucontainer").hidden = false;
 }
 function socketOnError(e) {
+    clearNetworkPlayers();
     isConnectedToServer = false;
     console.error(e);
     if(reconnectMaxTries > reconnectCurrentTry++);
