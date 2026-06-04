@@ -230,7 +230,7 @@ function socketOnMsg(e) {
                     notUsed.delete(element[0]);
                 }
             });
-            console.warn(notUsed.size)
+            // console.warn(notUsed.size)
             // notUsed.entries().forEach(element => {
             //     if(element[0].uuid == uuid)
             //     {
@@ -258,9 +258,10 @@ function socketOnMsg(e) {
         notUsed.entries().forEach(element => {
             // console.log(element);
             element[0].destroy();
-            notUsed.delete(element);
+            notUsed.delete(element[0]);
+            networkPlayers.delete(element[0])
         });
-        console.log(notUsed.size)
+        // console.log(notUsed.size)
     }
 }
 

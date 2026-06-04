@@ -64,6 +64,7 @@ class gameobject{
         gameobjects.add(this);
     }
     destroy(){
+        $("#gameobject-" + this.id).outerHTML = "";
         gameobjects.delete(this);
         console.log("DESTROYED");
     }
