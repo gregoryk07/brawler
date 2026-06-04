@@ -189,3 +189,44 @@ main#mainmenucontainer>h1{
     list-style: none;
     font-size: 200%;
 }
+#chatbox{
+    background-color: rgba(0, 0, 0, 0.7);
+    width: 250px;
+    height: 150px;
+    bottom: 0;
+    right: 0;
+    position: fixed;
+}
+#chatinputsection{
+    height: 20px;
+}
+#chatcontents{
+    height: 130px;
+    width: 250px;
+    color: white;
+    /* padding: 2px; */
+    overflow: auto;
+}
+::-webkit-scrollbar{
+    width: 0;
+}
+#chatsendbtn{
+    background-color: rgba(0, 0, 0, 0.3);
+    color: white;
+    float: right;
+    width: 40px;
+    height: 20px;
+    padding: 0;
+    margin: 0;
+    border: none;
+}
+#chatmsg{
+    background-color: rgba(0, 0, 0, 0.3);
+    color: white;
+    border: none;
+    width: 200px;
+    height: 16px;
+    float: left;
+    margin: 0;
+    padding: 2px 5px;
+}

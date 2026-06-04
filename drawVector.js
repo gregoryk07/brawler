@@ -1,19 +1,24 @@
 var vector_arrow_id = 0;
 const vector_arrow__tip_offset = 4
 function drawVector(from_x = 0, from_y = 0, angle = 0, length = 100, color = "red", text = "", showValue = false){
-    
+    // while(angle < 0){
+    //     angle += 360;
+    // }
+    // while(angle > 360){
+    //     angle -= 360;
+    // }
 
     let v = document.createElement("div");
     v.style.width = length - vector_arrow__tip_offset + "px";
     v.style.padding = "2px 0px";
-    v.style.height = "0px";
+    v.style.height = "2px";
     v.style.margin = "0px"
     v.style.backgroundColor = color
     v.style.position = "absolute"
     v.style.zIndex = "10"
 
     v.style.left = from_x + "px";
-    v.style.top = from_y + "px";
+    v.style.bottom = from_y + "px";
     v.style.transformOrigin = "left";
     v.style.transform = "rotate("+angle+"deg)";
 
@@ -64,14 +69,14 @@ function drawVector(from_x = 0, from_y = 0, angle = 0, length = 100, color = "re
 
     return vector_arrow_id++;
 }
-function modifyVector(num, newRot, newLen, newStartX, newStartY, newText, newColor){
+function modifyVector(num, newRot, newLen, newStartX, newStartY, newText, newColor, newShowValue){
     vv = document.getElementById("vector_arrow_" + num)
 
     if(vv == undefined) return
 
     if(newRot != undefined){
         vv.style.transform = "rotate("+newRot+"deg)";
-        vv.children[0].style.transform = "rotate(-"+newRot+"deg) translateY(-40px)";
+        vv.children[0].style.transform = "rotate("+(-newRot)+"deg) translateY(-40px)";
     }
     if(newLen != undefined){
         vv.style.width = newLen - vector_arrow__tip_offset + "px";
@@ -80,10 +85,13 @@ function modifyVector(num, newRot, newLen, newStartX, newStartY, newText, newCol
         vv.style.left = newStartX + "px";
     }
     if(newStartY != undefined){
-        vv.style.top = newStartY + "px";
+        vv.style.bottom = newStartY + "px";
     }
     if(newText != undefined){
         vv.children[0].innerText = newText
+    }
+    if(newText != undefined && newShowValue){
+        vv.children[0].innerText = newText + ": " + newLen + "px";
     }
     if(newColor != undefined){
         vv.style.backgroundColor = newColor;

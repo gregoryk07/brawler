@@ -59,6 +59,24 @@ var Input = {
         }
     },
     handleInputKeyboardDown(e){
+        if(Input.settings.keyboard[e.code] == "menu-back" && chatOpened){
+            closeChat();
+            e.preventDefault();
+            return;
+        }
+        if(Input.settings.keyboard[e.code] == "menu-submit" && chatOpened){
+            sendChatMSG();
+            e.preventDefault();
+            return;
+        }
+        if(chatOpened){
+            return;
+        }
+        if(Input.settings.keyboard[e.code] == "open-chat" && !chatOpened){
+            openChat();
+            e.preventDefault();
+            return;
+        }
         // e.preventDefault();
         // console.log("DOWN " + e.code)
         if(checkIfKeyPresent(Input.settings.keyboard, e.code)) e.preventDefault();
@@ -84,6 +102,27 @@ var Input = {
     getCurrentBindings(){
 
     }
+}
+var chatOpened = false;
+function openChat(){
+    $("#chatmsg").focus();
+    chatOpened = true;
+}
+function closeChat(){
+    chatOpened = false;
+    $("#chatmsg").value = "";
+    $("#chatmsg").blur();
+}
+function sendChatMSG(){
+    if(isConnectedToServer){
+        socket.send(JSON.stringify(
+            {
+                "action": "chat_message",
+                "message": $("#chatmsg").value
+            }
+        ))
+    }
+    closeChat();
 }
 onkeydown = Input.handleInputKeyboardDown;
 onkeyup = Input.handleInputKeyboardUp;

@@ -203,6 +203,17 @@ function connectToServer(reconnect=false){
 
 }
 function socketOnMsg(e) {
+
+    if(JSON.parse(e.data).action == "chat_message"){
+        newmsg = $new("div");
+
+        msg = JSON.parse(e.data);
+
+        newmsg.innerText = msg.from + ": " + msg.content;
+
+        $("#chatcontents").appendChild(newmsg);
+        $("#chatcontents").scrollBy(0, 1000)
+    }
     // console.log(e);
     // console.log("UPDATE");
     if(JSON.parse(e.data).action == "update")
@@ -253,6 +264,10 @@ function socketOnMsg(e) {
                 x: newPlayer.position.x,
                 y: newPlayer.position.y
             }
+            found.velocity = {
+                x: newPlayer.velocity.x,
+                y: newPlayer.velocity.y
+            }
             // console.log(found);
         }
         notUsed.entries().forEach(element => {
@@ -268,7 +283,22 @@ function socketOnMsg(e) {
 function clearNetworkPlayers(){
     networkPlayers.clear();
 }
+nickname = "test";
+function setNickname(_nickname){
+    nickname = _nickname;
+    return true;
+}
 function socketOnOpen(e) {
+    socket.send(JSON.stringify(
+        {
+            "action":"information_set",
+            "data": 
+            {
+                "username" : nickname,
+                "hero": "0"
+            }
+        }
+    ))
     clearNetworkPlayers();
     console.log("SOCKET OPEN")
     reconnectCurrentTry = 0;

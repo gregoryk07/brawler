@@ -8,10 +8,15 @@ class gameobject{
     position = {
         x: 0,
         y: 0
-    }
+    };
+    velocity = {
+        x: 0,
+        y: 0
+    };
     facing = {
 
     }
+    velVector = drawVector(0, 0, 0, 0, "red", "VELOCITY", true);
     animationFrame = 0;
     update(time = {deltaTime: 0.1}){
         // console.log(Math.floor(this.animationFrame/this.animationFrameTimeSpan));
@@ -24,6 +29,21 @@ class gameobject{
             }
 
         }
+        //INTERPOLATION BASED ON VELOCITY GIVEN BY SERVER
+        this.position.x += this.velocity.x * time.deltaTime;
+        this.position.y += this.velocity.y * time.deltaTime;
+
+        // let angleInDegrees = (180 / Math.PI) * Math.asin(this.velocity.y / Math.sqrt(Math.pow(this.velocity.x, 2) + Math.pow(this.velocity.y, 2)));
+
+
+        //// VELOCITY VECTORS
+        // Returns the angle in radians from -PI to PI
+        let angleInRadians = Math.atan2(this.velocity.y, this.velocity.x);
+
+        // Convert to degrees
+        let angleInDegrees = angleInRadians * (180 / Math.PI);
+
+        modifyVector(this.velVector, -angleInDegrees, Math.pow((Math.pow(this.velocity.x, 2) + Math.pow(this.velocity.y, 2)), 0.5), this.position.x+64, this.position.y+64, "VELOCITY", "red", true);
 
         this.renderSelf();
     }
