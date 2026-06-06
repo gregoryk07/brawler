@@ -202,7 +202,6 @@ function connectToServer(reconnect=false){
     socket = new WebSocket(addr);
     
     $("#mainmenucontainer").hidden = true;
-    isConnectedToServer = true;
     
     socket.onmessage = socketOnMsg
     
@@ -362,6 +361,8 @@ function moveTo({x= 0, y= 0} = {}, {xv = 0, yv = 0} = {}){
     return false;
 }
 function socketOnOpen(e) {
+    
+    isConnectedToServer = true;
     socket.send(JSON.stringify(
         {
             "action":"information_set",

@@ -81,7 +81,7 @@ function modifyVector(num, newRot, newLen, newStartX, newStartY, newText, newCol
         vv.children[0].style.transform = "rotate("+(-newRot)+"deg) translateY(-40px)";
     }
     if(newLen != undefined){
-        console.log(newLen);
+        // console.log(newLen);
         newLen *= absoluteVectorScale;
         vv.style.width = Math.max(newLen - vector_arrow__tip_offset, 0) + "px";
     }
