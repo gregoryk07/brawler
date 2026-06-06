@@ -9,6 +9,10 @@ import uuid
 
 players = []
 
+tickTime = 0.1
+
+version = "0.1.0"
+
 
 async def handle_client(websocket):
     
@@ -22,7 +26,7 @@ async def handle_client(websocket):
         connected_clients.add(websocket)
         
         print(f"CONNECTED: {userid}")
-        await websocket.send(json.dumps({"action": "init_data", "status": 200, "userid": userid}))
+        await websocket.send(json.dumps({"action": "init_data", "status": 200, "userid": userid, "tickTime": tickTime, "version": version}))
         
         async for message in websocket:
             # print(f"MESSAGE from {userid}: {message}")
@@ -96,7 +100,7 @@ async def main():
             except Exception as ex:
                 print(ex)
             
-            await asyncio.sleep(0.1)
+            await asyncio.sleep(tickTime)
             # await asyncio.sleep(2)
 
 if __name__ == "__main__":
