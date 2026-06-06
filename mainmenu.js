@@ -134,6 +134,16 @@ addEventListener("menu-back", (e) => {
 })
 var isMainMenuVisible = true;
 function handleMainMenu({ direction = {x: 0, y: 0}, click = false, back = false } = {}){
+    if(ismodalshown){
+        if(click){
+            hidemodal();
+        }
+        if(back){
+            hidemodal();
+        }
+        return;
+    }
+    isMainMenuVisible = !$("#mainmenucontainer").hidden;
     if(!isMainMenuVisible) return;
     // console.log(click);
     if(direction.x > 0) direction.x = 1;
@@ -235,4 +245,16 @@ function handleMainMenu({ direction = {x: 0, y: 0}, click = false, back = false 
 
     return;
 
+}
+isPauseMenuVisible = false;
+function showPauseMenu(){
+    isPauseMenuVisible = true;
+    $("#pausemenucontainer").hidden = false;
+}
+function hidePauseMenu(){
+    isPauseMenuVisible = false;
+    $("#pausemenucontainer").hidden = true;
+}
+function handlePauseMenu() {
+    isPauseMenuVisible = !$("#pausemenucontainer").hidden;
 }
