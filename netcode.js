@@ -6,6 +6,13 @@ const ip_port = "8765"
 
 var networkPlayers = new Set();
 
+var serverSettings = {
+    tickTime: 0.1,
+    version: "0.0.0"
+}
+
+const minServerVersion = new Version("0.1.0");
+
 const officialServers = [
     {
         region: "local",
@@ -168,6 +175,11 @@ chosenServer = undefined;
 var isConnectedToServer = false
 
 function connectToServer(reconnect=false){
+    try {
+        socket.close();
+    } catch (error) {
+        
+    }
     if(!reconnect) reconnectCurrentTry = 0;
     if(isConnectedToServer) {
         console.warn("ALREADY CONNECTED TO A SERVER, ABORTING");
@@ -203,6 +215,29 @@ function connectToServer(reconnect=false){
 
 }
 function socketOnMsg(e) {
+    if(JSON.parse(e.data).action == "init_data"){
+        try {
+            
+            msg = JSON.parse(e.data);
+            serverVersion = new Version(msg.version);
+            if(minServerVersion.isGreaterThan(serverVersion)){
+                disconnectFromServer();
+                console.error("Server is deprecated ("+serverVersion.toString()+")\nMinimum server version required: "+minServerVersion.toString());
+                showmodal("Server is deprecated ("+serverVersion.toString()+")\nMinimum server version required: "+minServerVersion.toString(), true, true);
+                return;
+            }
+            console.log("SERVER VERSION: " + serverVersion.toString());
+            serverSettings.version = serverVersion.toString();
+            serverSettings.tickTime = msg.tickTime;
+            hidemodal(true);
+        } catch (error) {
+            console.error(error)
+            disconnectFromServer();
+            console.error("Server is deprecated (unknown)\nMinimum server version required: "+minServerVersion.toString());
+            showmodal("Server is deprecated (unknown)\nMinimum server version required: "+minServerVersion.toString(), true, true);
+            return;
+        }
+    }
 
     if(JSON.parse(e.data).action == "chat_message"){
         newmsg = $new("div");
@@ -268,6 +303,7 @@ function socketOnMsg(e) {
                 x: newPlayer.velocity.x,
                 y: newPlayer.velocity.y
             }
+            found.showNickname = true;
             // console.log(found);
         }
         notUsed.entries().forEach(element => {
@@ -281,12 +317,49 @@ function socketOnMsg(e) {
 }
 
 function clearNetworkPlayers(){
+    serverSettings = {
+        tickTime: 0.1,
+        version: "0.0.0"
+    };
     networkPlayers.clear();
 }
 nickname = "test";
 function setNickname(_nickname){
     nickname = _nickname;
+    if(isConnectedToServer){
+         socket.send(JSON.stringify(
+        {
+            "action":"information_set",
+            "data": 
+            {
+                "username" : nickname,
+                "hero": "0"
+            }
+        }
+    ))
+    }
     return true;
+}
+function moveTo({x= 0, y= 0} = {}, {xv = 0, yv = 0} = {}){
+    if(isConnectedToServer){
+        socket.send(JSON.stringify({
+        "action":"update_player","data": 
+            {
+            "position" :
+                {
+                    "x": x,
+                    "y": y
+                },
+            "velocity": {
+                    "x": xv,
+                    "y": yv
+                },
+                "rot": 90
+            }
+        }) );
+        return true;
+    }
+    return false;
 }
 function socketOnOpen(e) {
     socket.send(JSON.stringify(
@@ -304,17 +377,18 @@ function socketOnOpen(e) {
     reconnectCurrentTry = 0;
 }
 function socketOnClose(e) {
+    console.warn(e);
     clearNetworkPlayers();
     console.log("SOCKET CLOSE")
     isConnectedToServer = false;
     $("#mainmenucontainer").hidden = false;
 }
 function socketOnError(e) {
-    clearNetworkPlayers();
-    isConnectedToServer = false;
     console.error(e);
-    if(reconnectMaxTries > reconnectCurrentTry++);
-    connectToServer(reconnect = true);
+    clearNetworkPlayers();
+    console.log("SOCKET ERROR")
+    isConnectedToServer = false;
+    $("#mainmenucontainer").hidden = false;
 }
 var reconnectMaxTries = 5;
 var reconnectCurrentTry = 0;
