@@ -28,9 +28,22 @@ body{
     position: fixed;
     bottom: 0;
     left: 0;
+    text-align: center;
 }
 .sprites{
     z-index: 10
+}
+#modal{
+    position: fixed;
+    left: 25%;
+    right: 25%;
+    top: 25%;
+    bottom: 25%;
+    background-color: rgb(20, 20, 20);
+    color: white;
+    z-index: 10;
+    padding: 20px;
+    border-radius: 10px;
 }
 nav#mainmenu{
     padding: 20% 0;
@@ -229,4 +242,13 @@ main#mainmenucontainer>h1{
     float: left;
     margin: 0;
     padding: 2px 5px;
+}
+.nickname_nameplate{
+    color: white;
+    background-color: rgba(0, 0, 0, 0.7);
+    transform: translateY(-30px);
+    display: inline-block;
+    padding: 1px;
+    text-transform: uppercase;
+    width: max-content;
 }

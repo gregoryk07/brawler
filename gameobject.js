@@ -2,6 +2,7 @@ var gameobjects = new Set();
 nextid = 0;
 
 class gameobject{
+    showNickname = false;
     id = -1;
     nickname = "";
     uuid = "";
@@ -19,6 +20,7 @@ class gameobject{
     velVector = drawVector(0, 0, 0, 0, "red", "VELOCITY", true);
     animationFrame = 0;
     update(time = {deltaTime: 0.1}){
+        this.#nicknameObj.innerText = this.nickname;
         // console.log(Math.floor(this.animationFrame/this.animationFrameTimeSpan));
         // animations
         if(this.characterid != -1){
@@ -43,7 +45,9 @@ class gameobject{
         // Convert to degrees
         let angleInDegrees = angleInRadians * (180 / Math.PI);
 
-        modifyVector(this.velVector, -angleInDegrees, Math.pow((Math.pow(this.velocity.x, 2) + Math.pow(this.velocity.y, 2)), 0.5), this.position.x+64, this.position.y+64, "VELOCITY", "red", true);
+        modifyVector(this.velVector, -angleInDegrees, Math.sqrt(
+            Math.pow(this.velocity.x, 2) + Math.pow(this.velocity.y, 2)
+        ), this.position.x+64, this.position.y+64, "VELOCITY", "red", true);
 
         this.renderSelf();
     }
@@ -53,7 +57,9 @@ class gameobject{
         if(self == null){
             $("#sprites").innerHTML += "<div id=\"gameobject-" + this.id + "\" class=\"characters\">";
             self = $("#gameobject-" + this.id);
+            self.appendChild(this.#nicknameObj);
         }
+        this.#nicknameObj.style.display = this.showNickname ? "inline-block" : "none";
         // console.log(self);
 
         self.style.transform = "translate(" + this.position.x + "px, -" + this.position.y + "px)";
@@ -77,8 +83,13 @@ class gameobject{
     setUUID(uuid){
         this.uuid = uuid;
     }
+
+    #nicknameObj = null;
     
     constructor(){
+        this.#nicknameObj = $new("span");
+        this.#nicknameObj.innerText = this.nickname;
+        this.#nicknameObj.classList.add("nickname_nameplate");
         console.log("CREATED");
         this.id = nextid++;
         gameobjects.add(this);
@@ -86,6 +97,8 @@ class gameobject{
     destroy(){
         $("#gameobject-" + this.id).outerHTML = "";
         gameobjects.delete(this);
+        console.warn(this.velVector);
+        removeVector(this.velVector);
         console.log("DESTROYED");
     }
 }
