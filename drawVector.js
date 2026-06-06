@@ -1,5 +1,6 @@
 var vector_arrow_id = 0;
 const vector_arrow__tip_offset = 4
+var absoluteVectorScale = 0.5;
 function drawVector(from_x = 0, from_y = 0, angle = 0, length = 100, color = "red", text = "", showValue = false){
     // while(angle < 0){
     //     angle += 360;
@@ -7,6 +8,7 @@ function drawVector(from_x = 0, from_y = 0, angle = 0, length = 100, color = "re
     // while(angle > 360){
     //     angle -= 360;
     // }
+    length *= absoluteVectorScale;
 
     let v = document.createElement("div");
     v.style.width = length - vector_arrow__tip_offset + "px";
@@ -79,7 +81,9 @@ function modifyVector(num, newRot, newLen, newStartX, newStartY, newText, newCol
         vv.children[0].style.transform = "rotate("+(-newRot)+"deg) translateY(-40px)";
     }
     if(newLen != undefined){
-        vv.style.width = newLen - vector_arrow__tip_offset + "px";
+        console.log(newLen);
+        newLen *= absoluteVectorScale;
+        vv.style.width = Math.max(newLen - vector_arrow__tip_offset, 0) + "px";
     }
     if(newStartX != undefined){
         vv.style.left = newStartX + "px";
