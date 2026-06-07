@@ -1,6 +1,6 @@
 var vector_arrow_id = 0;
 const vector_arrow__tip_offset = 4
-var absoluteVectorScale = 0.5;
+var absoluteVectorScale = 1;
 function drawVector(from_x = 0, from_y = 0, angle = 0, length = 100, color = "red", text = "", showValue = false){
     // while(angle < 0){
     //     angle += 360;
