@@ -17,19 +17,45 @@ const $ = (name) => {
 const $new = (tagname) => {
     return document.createElement(tagname);
 }
+function closeCreditsMenu(){
+    
+    $("#creditsmenu").style.left = "-160px";
+    
+    clearServerMenuSelection();
+    $("#mainmenu").children[3].classList.remove("selectedMenu")
+}
+function closePlayOnlineMenu(){
+    
+    $("#servermenu").style.left = "-160px";
+    
+    clearServerMenuSelection();
+    $("#mainmenu").children[0].classList.remove("selectedMenu")
+}
+function closeAllMenus(){
+    $("#creditsmenu").style.left = "-160px";
+    $("#mainmenu").children[3].classList.remove("selectedMenu")
+    $("#mainmenu").children[1].classList.remove("selectedMenu")
+    $("#mainmenu").children[2].classList.remove("selectedMenu")
+    $("#servermenu").style.left = "-160px";
+        clearServerMenuSelection();
+    $("#mainmenu").children[0].classList.remove("selectedMenu")
+    mainmenuoptions = [0];
+}
 
 function mainPlayOnline(){
     // console.error("CALL");
     if($("#mainmenu").children[0].classList.contains("selectedMenu"))
     {
-        clearServerMenuSelection();
-        $("#servermenu").style.left = "-160px";
-        $("#mainmenu").children[0].classList.remove("selectedMenu")
+        // clearServerMenuSelection();
+        // $("#servermenu").style.left = "-160px";
+        // $("#mainmenu").children[0].classList.remove("selectedMenu")
+        closeAllMenus();
         mainmenuoptions = [0];
         // console.log("A")
 
     }
     else{
+        closeCreditsMenu();
         $("#servermenu").style.left = "240px";
         $("#mainmenu").children[0].classList.add("selectedMenu")
         mainmenuoptions = [0, 0]
@@ -102,14 +128,16 @@ function mainCredits(){
     // console.error("CALL");
     if($("#mainmenu").children[3].classList.contains("selectedMenu"))
     {
-        clearServerMenuSelection();
-        $("#creditsmenu").style.left = "-160px";
-        $("#mainmenu").children[3].classList.remove("selectedMenu")
+        // clearServerMenuSelection();
+        // $("#creditsmenu").style.left = "-160px";
+        // $("#mainmenu").children[3].classList.remove("selectedMenu")
+        closeAllMenus();
         mainmenuoptions = [3];
         // console.log("A")
 
     }
     else{
+        closePlayOnlineMenu();
         $("#creditsmenu").style.left = "240px";
         $("#mainmenu").children[3].classList.add("selectedMenu")
         mainmenuoptions = [3, 0]
