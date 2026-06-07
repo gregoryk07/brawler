@@ -54,26 +54,26 @@ posx = 0;
 posy = 0;
 
 function runMovement(time = {deltaTime: 0}){
+	velx = 0
+	vely = 0
 	if(!ismodalshown && !isPauseMenuVisible && !chatOpened)
 	{
-	// data available: serverSettings.tickTime - interval between server ticks in seconds
-	// data available: time.deltaTime - interval between frames in seconds
-	velx = 0
+		// data available: serverSettings.tickTime - interval between server ticks in seconds
+		// data available: time.deltaTime - interval between frames in seconds
 
-	
-	velx -= Number(Input.inputData["dpad-left"]) * velocity;
-	velx += Number(Input.inputData["dpad-right"]) * velocity;
+		
+		velx -= Number(Input.inputData["dpad-left"]) * velocity;
+		velx += Number(Input.inputData["dpad-right"]) * velocity;
 
-	posx += velx * time.deltaTime;
-	vely = 0
+		posx += velx * time.deltaTime;
 
-	
-	vely -= Number(Input.inputData["dpad-down"]) * velocity;
-	vely += Number(Input.inputData["dpad-up"]) * velocity;
+		
+		vely -= Number(Input.inputData["dpad-down"]) * velocity;
+		vely += Number(Input.inputData["dpad-up"]) * velocity;
 
-	posy += vely * time.deltaTime;
+		posy += vely * time.deltaTime;
 
-	moveTo({x: posx, y: posy},{xv: velx, yv: vely});
-	// console.log(velx);
+		// console.log(velx);
 	}
+	moveTo({x: posx, y: posy},{xv: velx, yv: vely});
 }
