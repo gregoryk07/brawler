@@ -11,7 +11,7 @@ players = []
 
 tickTime = 0.1
 
-version = "0.1.0"
+version = "0.1.1"
 
 
 async def handle_client(websocket):
@@ -49,6 +49,16 @@ async def handle_client(websocket):
                         if player["initialized"] == 1:
                             text = msg["message"]
                             broadcast(connected_clients, json.dumps({"status":200, "action":"chat_message", "content" : text, "from": player["nickname"]}))
+                            if text.startswith("/", 0, 1):
+                                print("COMMAND")
+                                cmd = text[1:]
+                                print(str(text) + "   (" + str(cmd) + ")" )
+                                if cmd == "testparticle":
+                                    broadcast(connected_clients, json.dumps({"status":200, "action":"show_particles", "count" : 100, "speed" : 10, "spread" : 360, "direction" : 0, "position" : {"x" : 350, "y" : 200}, "lifetime" : 10000, "asset" : "assets/particles/cloud.png", "assetsize" : 32}))
+                                    
+
+                    case "show_particles":
+                        broadcast(connected_clients, json.dumps({"status":200, "action":"show_particles", "count" : msg["data"]["count"], "speed" : msg["data"]["speed"], "spread" : msg["data"]["spread"], "direction" : msg["data"]["direction"], "position" : {"x" : msg["data"]["position"]["x"], "y" : msg["data"]["position"]["y"]}, "lifetime" : msg["data"]["lifetime"], "asset" : msg["data"]["asset"], "assetsize" : msg["data"]["assetsize"]}))
             except Exception as ex:
                 print(ex)
                 await websocket.send(json.dumps({"status": 500}))

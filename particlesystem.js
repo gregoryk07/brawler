@@ -1,4 +1,26 @@
 const particleSystem = {
+    async sendParticleServerRequest({count = 10, pos= {x: 0, y: 0}, direction= 0 /* deg */, speed= 10, spread= 30 /* degrees*/, lifetime= 1000 /* ms */, asset= "assets/particles/cloud.png", assetsize= 32} = {}){
+        if(isConnectedToServer){
+            packet = {
+                action: "show_particles",
+                data: {
+                    count: count,
+                    position: {
+                        x: pos.x,
+                        y: pos.y
+                    },
+                    direction: direction,
+                    speed: speed,
+                    spread: spread,
+                    lifetime: lifetime,
+                    asset: asset,
+                    assetsize: assetsize
+                }
+            }
+            console.log(packet)
+            socket.send(JSON.stringify(packet));
+        }
+    },
     async showParticles({count = 10, pos= {x: 0, y: 0}, direction= 0 /* deg */, speed= 10, spread= 30 /* degrees*/, lifetime= 1000 /* ms */, asset= "assets/particles/cloud.png", assetsize= 32} = {}){
         var http = new XMLHttpRequest();
         http.open('head', asset);

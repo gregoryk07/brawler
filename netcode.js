@@ -214,6 +214,15 @@ function connectToServer(reconnect=false){
 
 }
 function socketOnMsg(e) {
+    if(JSON.parse(e.data).action == "show_particles"){
+        console.log("PARTICLE");
+        msg = JSON.parse(e.data);
+        console.log(msg);
+        args = {count: msg.count, pos: {x: msg.position.x, y: msg.position.y}, direction: msg.direction, speed: msg.speed, spread: msg.spread, lifetime: msg.lifetime, asset: msg.asset, assetsize: msg.assetsize}
+        particleSystem.showParticles(args)
+        console.log(args);
+        
+    }
     if(JSON.parse(e.data).action == "init_data"){
         try {
             
