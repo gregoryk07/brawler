@@ -9,9 +9,9 @@ import uuid
 
 players = []
 
-tickTime = 0.1
+tickTime = 0.0333333
 
-version = "0.1.2"
+version = "0.1.3"
 
 
 async def handle_client(websocket):
@@ -97,6 +97,7 @@ async def main():
     async with serve(handle_client, "0.0.0.0", 8765):
         print("WSS SERVER START")
         print("wss://wss.gregoryk07.online:8765\n\n")
+        print("SERVER RUNNING AT " + str(round(1 / tickTime, 2)) + "TPS")
         # await asyncio.get_running_loop().create_future()  # Działa w nieskończoność
         while True:
             try:
