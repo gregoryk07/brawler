@@ -4,6 +4,7 @@ function MathLerp(a, b ,t){
 
 
 let lastTime = 0;
+let lastPingLoopTime = 0;
 var fpsLimit = 30;
 var runLoop = true;
 let prevfps = fpsLimit;
@@ -11,8 +12,15 @@ let prevfps = fpsLimit;
 function gameLoop(timestamp) {
     var interval = 1000 / fpsLimit;
 	// 1. Calculate how much time has passed since the last frame
+
+	pingInterval = 1000 // ping server every 1 second
 	const elapsed = timestamp - lastTime;
 
+	const elapsedPing = timestamp - lastPingLoopTime
+	if(elapsedPing >= pingInterval){
+		lastPingLoopTime = timestamp - (elapsed % pingInterval)
+		pingServer();
+	}
 	// 2. If enough time has passed, run the frame
 	if (elapsed >= interval) {
 		// Adjust lastTime to the current timestamp
@@ -36,6 +44,8 @@ function gameLoop(timestamp) {
 		curfps = (Math.floor(1 / deltaTime) / 1)
 
 		$("#stats").innerHTML = "FPS: " + Math.round(MathLerp(prevfps, curfps, 0.8 * deltaTime));
+		if(isConnectedToServer)
+			$("#stats").innerHTML += "<br>PING: " + ping + "ms";
 		// prevfps = Math.max(MathLerp(prevfps, curfps, 0.8 * deltaTime), 0);
 		prevfps = curfps
 		runMovement({deltaTime: deltaTime});

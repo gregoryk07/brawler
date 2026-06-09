@@ -11,7 +11,7 @@ players = []
 
 tickTime = 0.1
 
-version = "0.1.1"
+version = "0.1.2"
 
 
 async def handle_client(websocket):
@@ -33,6 +33,8 @@ async def handle_client(websocket):
             try:
                 msg = json.loads(message)
                 match msg["action"]:
+                    case "ping":
+                        await websocket.send(json.dumps({"status": 200, "action": "ping_reply"}))
                     case "information_set":
                         player["nickname"] = msg["data"]["username"]
                         player["hero"] = msg["data"]["hero"]

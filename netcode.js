@@ -213,7 +213,19 @@ function connectToServer(reconnect=false){
 
 
 }
+var lastPingTime
+var ping = 0;
+function pingServer(){
+    if(isConnectedToServer){
+        lastPingTime = new Date();
+        socket.send(JSON.stringify({"action":"ping"}));
+
+    }
+}
 function socketOnMsg(e) {
+    if(JSON.parse(e.data).action == "ping_reply"){
+        ping = Math.abs(lastPingTime - new Date());
+    }
     if(JSON.parse(e.data).action == "show_particles"){
         console.log("PARTICLE");
         msg = JSON.parse(e.data);
@@ -329,6 +341,9 @@ function clearNetworkPlayers(){
         tickTime: 0.1,
         version: "0.0.0"
     };
+    networkPlayers.entries().forEach((e) => {
+        e[0].destroy();
+    })
     networkPlayers.clear();
 }
 nickname = "test";
@@ -405,6 +420,8 @@ var reconnectCurrentTry = 0;
 function disconnectFromServer(){
     isConnectedToServer = false;
     socket.close();
+    socketOnClose();
+    closeAllMenus();
 }
 updateServerList();
 // connectToServer()
