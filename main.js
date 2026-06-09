@@ -36,9 +36,11 @@ function gameLoop(timestamp) {
 		curfps = (Math.floor(1 / deltaTime) / 1)
 
 		$("#stats").innerHTML = "FPS: " + Math.round(MathLerp(prevfps, curfps, 0.8 * deltaTime));
-		prevfps = Math.max(MathLerp(prevfps, curfps, 0.8 * deltaTime), 0);
-
+		// prevfps = Math.max(MathLerp(prevfps, curfps, 0.8 * deltaTime), 0);
+		prevfps = curfps
 		runMovement({deltaTime: deltaTime});
+
+		particleSystem.runParticleLoop({deltaTime: deltaTime});
 	}
 
 	// 3. Always request the next frame as fast as the monitor allows
