@@ -35,6 +35,7 @@ class gameobject{
         this.position.x += this.velocity.x * time.deltaTime;
         this.position.y += this.velocity.y * time.deltaTime;
 
+
         // let angleInDegrees = (180 / Math.PI) * Math.asin(this.velocity.y / Math.sqrt(Math.pow(this.velocity.x, 2) + Math.pow(this.velocity.y, 2)));
 
 
