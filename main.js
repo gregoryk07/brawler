@@ -67,12 +67,24 @@ function runMovement(time = {deltaTime: 0}){
 		velx -= Number(Input.inputData["dpad-left"]) * velocity;
 		velx += Number(Input.inputData["dpad-right"]) * velocity;
 
-		posx += velx * time.deltaTime;
-
+		
 		
 		vely -= Number(Input.inputData["dpad-down"]) * velocity;
 		vely += Number(Input.inputData["dpad-up"]) * velocity;
+		
 
+		vectorlength = Math.sqrt(Math.pow(velx, 2) + Math.pow(vely, 2));
+
+		if (vectorlength > 0) {
+			const desiredlength = Math.min(velocity, vectorlength);
+			
+			const scale = desiredlength / vectorlength;
+			
+			velx *= scale;
+			vely *= scale;
+		}
+
+		posx += velx * time.deltaTime;
 		posy += vely * time.deltaTime;
 
 		// console.log(velx);
