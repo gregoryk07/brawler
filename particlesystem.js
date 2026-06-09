@@ -101,7 +101,7 @@ const particleSystem = {
         }
     }
 }
-particleSystem.showParticles({lifetime : 10000, pos : {x: 350, y: 200}, spread : 360, count : 100})
+// particleSystem.showParticles({lifetime : 10000, pos : {x: 350, y: 200}, spread : 360, count : 100})
 // particleSystem.showParticles({lifetime : 10000, pos : {x: 350, y: 200}, spread : 360, count : 1000, asset : "assets/characters/tea_man/idle_right_1.png"})
 // particleSystem.showParticles({lifetime : 10000, pos : {x: 350, y: 200}, spread : 360, count : 1000, asset : "assets/characters/tea_man/idle_right_2.png"})
 // particleSystem.showParticles({lifetime : 10000, pos : {x: 350, y: 200}, spread : 360, count : 1000, asset : "assets/characters/tea_man/jump_left.png"})
