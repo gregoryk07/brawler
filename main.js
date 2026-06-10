@@ -51,6 +51,8 @@ function gameLoop(timestamp) {
 		runMovement({deltaTime: deltaTime});
 
 		particleSystem.runParticleLoop({deltaTime: deltaTime});
+
+		$("#chatbox").style.display = isMainMenuVisible ? "none" : "block"
 	}
 
 	// 3. Always request the next frame as fast as the monitor allows

@@ -41,7 +41,20 @@ function closeAllMenus(){
     $("#mainmenu").children[0].classList.remove("selectedMenu")
     mainmenuoptions = [0];
 }
-
+function hoverOverServer(server){
+    $("#servername").innerHTML = "Server name: " + server.name;
+    $("#serverregion").innerHTML = "Region: " + server.region;
+    $("#preciseregion").innerHTML = "Precise region: " + server.precise_region;
+    $("#serveraddress").innerHTML = "Address: " + server.ip.address + ":" + server.ip.port;
+    $("#serversecure").innerHTML = server.ip.isSecure ? "SSL SECURE" : "NOT SSL SECURE";
+}
+function unhoverOverServer(){
+    $("#servername").innerHTML = "";
+    $("#serverregion").innerHTML = "";
+    $("#preciseregion").innerHTML = "";
+    $("#serveraddress").innerHTML = "";
+    $("#serversecure").innerHTML = "";
+}
 function mainPlayOnline(){
     // console.error("CALL");
     if($("#mainmenu").children[0].classList.contains("selectedMenu"))
@@ -72,6 +85,7 @@ function serverMenuPlayOfficial(){
         $("#officialservers").style.bottom = "-100vh";
         $("#officialservers").style.left = "530px";
         $("#servermenu").children[0].classList.remove("selectedMenu")
+        $("#serverdetails").style.right = "-340px";
         mainmenuoptions = [0, 0]
 
     }
@@ -81,6 +95,7 @@ function serverMenuPlayOfficial(){
         $("#officialservers").style.top = "0";
         $("#officialservers").style.bottom = "0";
         $("#servermenu").children[0].classList.add("selectedMenu")
+        $("#serverdetails").style.right = "0px";
         
         mainmenuoptions = [0, 0, 0]
 
@@ -95,6 +110,7 @@ function serverMenuPlayCustom(){
         $("#customservers").style.bottom = "-100vh";
         $("#customservers").style.left = "530px";
         $("#servermenu").children[1].classList.remove("selectedMenu")
+        $("#serverdetails").style.right = "-340px";
 
         mainmenuoptions = [0, 0]
     }
@@ -104,6 +120,7 @@ function serverMenuPlayCustom(){
         $("#customservers").style.top = "0";
         $("#customservers").style.bottom = "0";
         $("#servermenu").children[1].classList.add("selectedMenu")
+        $("#serverdetails").style.right = "0px";
 
         mainmenuoptions = [0, 0, 1]
 
@@ -123,6 +140,7 @@ function clearServerMenuSelection(){
     $("#officialservers").style.top = "100vh";
     $("#customservers").style.bottom = "-100vh";
     $("#officialservers").style.bottom = "-100vh";
+    $("#serverdetails").style.right = "-340px";
 }
 function mainCredits(){
     // console.error("CALL");
@@ -240,6 +258,8 @@ function handleMainMenu({ direction = {x: 0, y: 0}, click = false, back = false 
             lastmainmenubtn = i;
         }
     }
+    
+    
     // console.log(lastmainmenubtn)
     // if(lastmainmenubtn < 0) lastmainmenubtn = 0;
     if(direction.y == 1){
@@ -256,6 +276,8 @@ function handleMainMenu({ direction = {x: 0, y: 0}, click = false, back = false 
     }
     // console.warn(lastmainmenubtn)
     mainmenubtns[lastmainmenubtn].classList.add("selectedMenuController");
+
+    mainmenubtns[lastmainmenubtn].dispatchEvent(new MouseEvent('mouseover', { 'view': window, 'bubbles': true, 'cancelable': true }));
     // console.error(mainmenubtns[lastmainmenubtn]);
     if(click)
     {

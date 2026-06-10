@@ -111,6 +111,9 @@ function updateServerList(){
         //     span.innerText += " (SSL SECURE)"
         // }
 
+        li.setAttribute("onmouseover", "hoverOverServer(officialServers[" + i + "])");
+        li.setAttribute("onmouseleave", "unhoverOverServer()");
+
         li.setAttribute("onclick", "chooseAndConnectToServer(officialServers["+i+"])");
 
         if(chosenServer == element){
@@ -152,6 +155,10 @@ function updateServerList(){
         // if(element.ip.isSecure){
         //     span.innerText += " (SSL SECURE)"
         // }
+
+        
+        li.setAttribute("onmouseover", "hoverOverServer(customServers[" + i + "])");
+        li.setAttribute("onmouseleave", "unhoverOverServer()");
 
         li.setAttribute("onclick", "chooseAndConnectToServer(customServers["+i+"])");
 

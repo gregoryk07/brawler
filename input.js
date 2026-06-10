@@ -107,6 +107,7 @@ var chatOpened = false;
 function openChat(){
     $("#chatmsg").focus();
     chatOpened = true;
+    if(isMainMenuVisible) closeChat();
 }
 function closeChat(){
     chatOpened = false;
