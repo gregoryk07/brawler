@@ -39,9 +39,9 @@ const customServers = [
     {
         region: "local",
         precise_region: "localhost",
-        name: "localhost test server 1",
+        name: "207",
         ip: {
-            address: "localhost",
+            address: "10.224.40.133",
             port: 8765,
             isSecure: false
         }
