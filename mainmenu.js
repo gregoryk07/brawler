@@ -31,6 +31,33 @@ function closePlayOnlineMenu(){
     clearServerMenuSelection();
     $("#mainmenu").children[0].classList.remove("selectedMenu")
 }
+function menuSettingsMenu(){
+    if($("#mainmenu").children[2].classList.contains("selectedMenu"))
+    {
+        // clearServerMenuSelection();
+        // $("#servermenu").style.left = "-160px";
+        // $("#mainmenu").children[0].classList.remove("selectedMenu")
+        closeAllMenus();
+        mainmenuoptions = [2];
+        // console.log("A")
+
+    }
+    else{
+        closeCreditsMenu();
+        closePlayOnlineMenu();
+        $("#settings").style.left = "240px";
+        $("#mainmenu").children[2].classList.add("selectedMenu")
+        mainmenuoptions = [2, 0]
+        // console.log("AA")
+
+    }
+}
+function closeSettingsMenu(){
+    $("#settings").style.left = "-160px";
+    
+    clearServerMenuSelection();
+    $("#mainmenu").children[2].classList.remove("selectedMenu")
+}
 function closeAllMenus(){
     $("#creditsmenu").style.left = "-160px";
     $("#mainmenu").children[3].classList.remove("selectedMenu")
@@ -40,6 +67,9 @@ function closeAllMenus(){
         clearServerMenuSelection();
     $("#mainmenu").children[0].classList.remove("selectedMenu")
     mainmenuoptions = [0];
+    $("#settings").style.left = "-160px";
+    
+    $("#mainmenu").children[2].classList.remove("selectedMenu")
 }
 function hoverOverServer(server){
     $("#servername").innerHTML = "Server name: " + server.name;
@@ -167,6 +197,12 @@ var mainmenuoptions = [];
 addEventListener("dpad-down", (e) => {
     handleMainMenu({ direction: {x: 0, y: -1} })
 })
+addEventListener("dpad-left", (e) => {
+    handleMainMenu({ direction: {x: -1, y: 0} })
+})
+addEventListener("dpad-right", (e) => {
+    handleMainMenu({ direction: {x: 1, y: 0} })
+})
 addEventListener("dpad-up", (e) => {
     handleMainMenu({ direction: {x: 0, y: 1} })
 })
@@ -224,6 +260,17 @@ function handleMainMenu({ direction = {x: 0, y: 0}, click = false, back = false 
                             break;
                     }
                     break;
+
+                case 2: 
+                    switch (mainmenuoptions[1]) {
+                        case 0:
+                            handlemainmenu_menu = "settings"
+                            break;
+                    
+                        default:
+                            break;
+                    }
+                    break;
             
                 case 3:
                     
@@ -272,6 +319,18 @@ function handleMainMenu({ direction = {x: 0, y: 0}, click = false, back = false 
         lastmainmenubtn += 1;
         if(lastmainmenubtn > mainmenubtns.length - 1){
             lastmainmenubtn = 0;
+        }
+    }
+    if(direction.x == 1){
+        if(mainmenubtns[lastmainmenubtn].tagName.toLowerCase() == "input" && mainmenubtns[lastmainmenubtn].type == "range"){
+            mainmenubtns[lastmainmenubtn].value = Number(mainmenubtns[lastmainmenubtn].value) + 1;
+            mainmenubtns[lastmainmenubtn].dispatchEvent(new Event("input"))
+        }
+    }
+    if(direction.x == -1){
+        if(mainmenubtns[lastmainmenubtn].tagName.toLowerCase() == "input" && mainmenubtns[lastmainmenubtn].type == "range"){
+            mainmenubtns[lastmainmenubtn].value = Number(mainmenubtns[lastmainmenubtn].value) - 1;
+            mainmenubtns[lastmainmenubtn].dispatchEvent(new Event("input"))
         }
     }
     // console.warn(lastmainmenubtn)

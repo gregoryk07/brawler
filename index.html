@@ -6,12 +6,14 @@
     <title>Brawler</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="importfonts.css">
+    <link rel="stylesheet" href="slider.css">
 
     <script src="dataset.js"></script>
     <script src="gameobject.js"></script>
     <script src="drawVector.js"></script>
     <script src="version.js"></script>
     <script src="particlesystem.js"></script>
+    <script src="slider.js"></script>
 </head>
 <body>
     <div id="modal" style="display: none;"></div>
@@ -20,7 +22,7 @@
         <nav id="mainmenu">
             <button onclick="mainPlayOnline()">Play online</button>
             <button onclick="alert('COMING SOON')">Open map editor</button>
-            <button onclick="alert('COMING SOON')">Settings</button>
+            <button onclick="menuSettingsMenu()">Settings</button>
             <button onclick="mainCredits()">Credits</button>
         </nav>
         <nav id="servermenu">
@@ -46,6 +48,14 @@
                 <li>gregoryk07 - coding</li>
                 <li>Macedoniix - artwork</li>
             </ul>
+        </nav>
+        <nav id="settings">
+            <button onclick="alert('COMMING SOON')"><span>Controls</span></button>
+            <button onclick="alert('COMMING SOON')"><span>Sounds</span></button>
+            
+            <input oninput="updateSlider(this)" onchange="updateSlider(this)" label="TEST SLIDER" type="range" name="" id="" min="0" max="100" value="5">
+        </nav>
+        <nav id="soundsettings">
         </nav>
     </main>
     
