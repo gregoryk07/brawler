@@ -355,6 +355,7 @@ function clearNetworkPlayers(){
 }
 nickname = "test";
 function setNickname(_nickname){
+    if(_nickname.length == 0) return;
     nickname = _nickname;
     if(isConnectedToServer){
          socket.send(JSON.stringify(
@@ -368,7 +369,16 @@ function setNickname(_nickname){
         }
     ))
     }
+    saveNickname();
+    updateNicknameUI();
     return true;
+}
+function updateNicknameUI(){
+    $("#changenicknamebtn").children[0].innerText = "Update nickname (" + nickname + ")";
+}
+updateNicknameUI();
+function setNicknameModal(){
+    showmodal("Enter your new nickname", true, true, true, "setNickname");
 }
 function moveTo({x= 0, y= 0} = {}, {xv = 0, yv = 0} = {}){
     if(isConnectedToServer){

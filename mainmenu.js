@@ -326,7 +326,7 @@ function handleMainMenu({ direction = {x: 0, y: 0}, click = false, back = false 
                     break;
 
                 case 2:
-                    console.log("a");
+                    // console.log("a");
                     switch (mainmenuoptions[2]) {
                         case 0:
                             handlemainmenu_menu = "controlsettings"
@@ -345,7 +345,7 @@ function handleMainMenu({ direction = {x: 0, y: 0}, click = false, back = false 
             handlemainmenu_menu = "mainmenu"
             break;
     }
-    console.log(handlemainmenu_menu);
+    // console.log(handlemainmenu_menu);
     if(handlemainmenu_menu == "NONE") return
     let mainmenubtns = $("#"+handlemainmenu_menu).children;
     lastmainmenubtn = 0;
