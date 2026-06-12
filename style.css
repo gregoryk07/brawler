@@ -267,3 +267,6 @@ main#mainmenucontainer>h1{
     padding-right: 20px;
     transition-duration: 200ms;
 }
+#mainmenucontainer nav button{
+    transform: translateY(-120px);
+}
