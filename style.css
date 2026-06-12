@@ -125,7 +125,7 @@ nav#servermenu>button:hover, nav#servermenu>button.selectedMenu, nav#settings>bu
 nav#servermenu>button>span, nav#settings>button>span{
     margin-left: 50px;
 }
-.serverlistmenu{
+.serverlistmenu, .secondaryMenu{
     z-index: 1;
     padding: 20% 0;
     display: flex;
@@ -143,7 +143,7 @@ nav#servermenu>button>span, nav#settings>button>span{
     clip-path: polygon(15% 0%, 0% 100%, 85% 100%, 100% 0%);
     transition-duration: 200ms;
 }
-.serverlistmenu>button{
+.serverlistmenu>button, .secondaryMenu>button{
     text-align: left;
     width: 100%;
     color: white;
@@ -158,7 +158,7 @@ nav#servermenu>button>span, nav#settings>button>span{
     transition-duration: 200ms;
     border: none;
 }
-.serverlistmenu>button:hover, .serverlistmenu>button.selectedMenu, nav>button.selectedMenuController{
+.serverlistmenu>button:hover, .serverlistmenu>button.selectedMenu, nav>button.selectedMenuController, .secondaryMenu>button.selectedMenu, .secondaryMenu>button:hover, .secondaryMenu>button.selectedMenuController{
     color: black !important;
     background-position: 0 !important;
     transition-duration: 400ms !important;
@@ -166,7 +166,7 @@ nav#servermenu>button>span, nav#settings>button>span{
 nav>button.selectedMenuController{
     outline: 2px white solid;
 }
-.serverlistmenu>button>span{
+.serverlistmenu>button>span, .secondaryMenu>button>span{
     margin-left: 50px;
 }
 *:focus-visible{

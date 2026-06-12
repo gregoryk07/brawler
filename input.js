@@ -59,6 +59,13 @@ var Input = {
         }
     },
     handleInputKeyboardDown(e){
+        console.log(e.code);
+        if(isRebinding){
+            console.log("BIND " + e.code + " TO " + actionToBind);
+            bind(e.code);
+            e.preventDefault();
+            return;
+        }
         if(Input.settings.keyboard[e.code] == "menu-back" && chatOpened){
             closeChat();
             e.preventDefault();
@@ -99,9 +106,24 @@ var Input = {
             console.log(gm);
         }
     },
-    getCurrentBindings(){
-
+    getCurrentBinding(action, shortName = false){
+        let keys = Object.keys(Input.settings.keyboard);
+        for (let i = 0; i < keys.length; i++) {
+            const element = keys[i];
+            if(Input.settings.keyboard[element] == action)
+            {
+                if(shortName){
+                    if(element.toString().includes("Key")){
+                        return element.toString().split("Key")[1]
+                    }
+                }
+                return element.toString();
+                
+            }
+        }
+        return "unbind";
     }
+
 }
 var chatOpened = false;
 function openChat(){
@@ -124,6 +146,40 @@ function sendChatMSG(){
         ))
     }
     closeChat();
+}
+var isRebinding = false;
+var actionToBind = "";
+function startRebind(action){
+    if(action == undefined || action == null) return;
+    isRebinding = true;
+    actionToBind = action;
+    showmodal("Press a key to bind to " + action, false, false);
+}
+function bind(key){
+    isRebinding = false;
+    prevKey = "";
+    keys = Object.keys(Input.settings.keyboard)
+    for (let i = 0; i < keys.length; i++) {
+        const _key = keys[i];
+        if(Input.settings.keyboard[_key] == actionToBind)
+        prevKey = _key;
+    }
+    delete Input.settings.keyboard[prevKey];
+    Input.settings.keyboard[key] = actionToBind;
+    actionToBind = "";
+    hidemodal(true);
+    updateBindings();
+}
+function updateBindings(){
+    $("#btn_rebind_dpad-left").children[0].innerHTML = "Left (" + Input.getCurrentBinding("dpad-left", true) + ")";
+    $("#btn_rebind_dpad-right").children[0].innerHTML = "Right (" + Input.getCurrentBinding("dpad-right", true) + ")";
+    $("#btn_rebind_dpad-up").children[0].innerHTML = "Up (" + Input.getCurrentBinding("dpad-up", true) + ")";
+    $("#btn_rebind_dpad-down").children[0].innerHTML = "Down (" + Input.getCurrentBinding("dpad-down", true) + ")";
+    $("#btn_rebind_jump").children[0].innerHTML = "Jump (" + Input.getCurrentBinding("jump", true) + ")";
+    $("#btn_rebind_throw").children[0].innerHTML = "Throw (" + Input.getCurrentBinding("throw", true) + ")";
+    $("#btn_rebind_menu-back").children[0].innerHTML = "Pause Menu / Back (" + Input.getCurrentBinding("menu-back", true) + ")";
+    $("#btn_rebind_menu-submit").children[0].innerHTML = "Submit (" + Input.getCurrentBinding("menu-submit", true) + ")";
+    $("#btn_rebind_open-chat").children[0].innerHTML = "Open chat (" + Input.getCurrentBinding("open-chat", true) + ")";
 }
 onkeydown = Input.handleInputKeyboardDown;
 onkeyup = Input.handleInputKeyboardUp;

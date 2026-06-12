@@ -57,6 +57,7 @@ function closeSettingsMenu(){
     
     clearServerMenuSelection();
     $("#mainmenu").children[2].classList.remove("selectedMenu")
+    closeSettingsMenuControls();
 }
 function closeAllMenus(){
     $("#creditsmenu").style.left = "-160px";
@@ -99,6 +100,7 @@ function mainPlayOnline(){
     }
     else{
         closeCreditsMenu();
+        closeSettingsMenu();
         $("#servermenu").style.left = "240px";
         $("#mainmenu").children[0].classList.add("selectedMenu")
         mainmenuoptions = [0, 0]
@@ -156,6 +158,34 @@ function serverMenuPlayCustom(){
 
     }
 }
+function closeSettingsMenuControls(){
+    $("#controlsettings").style.top = "100vh";
+    $("#controlsettings").style.bottom = "-100vh";
+    $("#controlsettings").style.left = "530px";
+    $("#settings").children[0].classList.remove("selectedMenu")
+}
+function settingsMenuControls(){
+    // console.error("CALL");
+    if($("#settings").children[0].classList.contains("selectedMenu"))
+    {
+        $("#controlsettings").style.top = "100vh";
+        $("#controlsettings").style.bottom = "-100vh";
+        $("#controlsettings").style.left = "530px";
+        $("#settings").children[0].classList.remove("selectedMenu")
+
+        mainmenuoptions = [2, 0]
+    }
+    else{
+        clearServerMenuSelection();
+        $("#controlsettings").style.left = "580px";
+        $("#controlsettings").style.top = "0";
+        $("#controlsettings").style.bottom = "0";
+        $("#settings").children[0].classList.add("selectedMenu")
+
+        mainmenuoptions = [2, 0, 0]
+
+    }
+}
 function clearServerMenuSelection(){
     list = $("#servermenu").children;
     for (let i = 0; i < list.length; i++) {
@@ -186,6 +216,7 @@ function mainCredits(){
     }
     else{
         closePlayOnlineMenu();
+        closeSettingsMenu();
         $("#creditsmenu").style.left = "240px";
         $("#mainmenu").children[3].classList.add("selectedMenu")
         mainmenuoptions = [3, 0]
@@ -280,22 +311,41 @@ function handleMainMenu({ direction = {x: 0, y: 0}, click = false, back = false 
             break;
         case 3:
             // console.warn(mainmenuoptions[2])
-            switch (mainmenuoptions[2]) {
+            switch(mainmenuoptions[0]){
                 case 0:
-                    // console.log("A")
-                    handlemainmenu_menu = "officialservers"
+                    switch (mainmenuoptions[2]) {
+                        case 0:
+                            // console.log("A")
+                            handlemainmenu_menu = "officialservers"
+                            break;
+                        case 1:
+                            // console.log("A")
+                            handlemainmenu_menu = "customservers"
+                            break;
+                    }
                     break;
-                case 1:
-                    // console.log("A")
-                    handlemainmenu_menu = "customservers"
+
+                case 2:
+                    console.log("a");
+                    switch (mainmenuoptions[2]) {
+                        case 0:
+                            handlemainmenu_menu = "controlsettings"
+                            break;
+                    
+                        case 1:
+                            handlemainmenu_menu = "soundsettings";
+                            break;
+                    }
                     break;
             }
             break;
+            
     
         case 1:
             handlemainmenu_menu = "mainmenu"
             break;
     }
+    console.log(handlemainmenu_menu);
     if(handlemainmenu_menu == "NONE") return
     let mainmenubtns = $("#"+handlemainmenu_menu).children;
     lastmainmenubtn = 0;

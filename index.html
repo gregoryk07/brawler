@@ -50,12 +50,23 @@
             </ul>
         </nav>
         <nav id="settings">
-            <button onclick="alert('COMMING SOON')"><span>Controls</span></button>
+            <button onclick="settingsMenuControls()"><span>Controls</span></button>
             <button onclick="alert('COMMING SOON')"><span>Sounds</span></button>
             
             <input oninput="updateSlider(this)" label="TEST SLIDER" type="range" name="" id="" min="0" max="10" value="5">
         </nav>
         <nav id="soundsettings">
+        </nav>
+        <nav id="controlsettings" class="secondaryMenu">
+            <button id="btn_rebind_dpad-left" onclick="startRebind('dpad-left')"><span></span></button>
+            <button id="btn_rebind_dpad-right" onclick="startRebind('dpad-right')"><span></span></button>
+            <button id="btn_rebind_dpad-up" onclick="startRebind('dpad-up')"><span></span></button>
+            <button id="btn_rebind_dpad-down" onclick="startRebind('dpad-down')"><span></span></button>
+            <button id="btn_rebind_jump" onclick="startRebind('jump')"><span></span></button>
+            <button id="btn_rebind_throw" onclick="startRebind('throw')"><span></span></button>
+            <button id="btn_rebind_menu-back" onclick="startRebind('menu-back')"><span></span></button>
+            <button id="btn_rebind_menu-submit" onclick="startRebind('menu-submit')"><span></span></button>
+            <button id="btn_rebind_open-chat" onclick="startRebind('open-chat')"><span></span></button>
         </nav>
     </main>
     

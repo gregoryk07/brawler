@@ -103,3 +103,4 @@ function runMovement(time = {deltaTime: 0}){
 	}
 	moveTo({x: posx, y: posy},{xv: velx, yv: vely});
 }
+updateBindings();
