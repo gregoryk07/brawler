@@ -496,3 +496,11 @@ function handlePauseMenu({ direction = {x: 0, y: 0}, click = false, back = false
 
     return;
 }
+function toggleFullscreen(){
+    if(document.fullscreenElement == null){
+        document.body.requestFullscreen();
+    }
+    else{
+        document.exitFullscreen();
+    }
+}
