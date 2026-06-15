@@ -84,3 +84,18 @@ characters = [
         }
     }
 ]
+characters.forEach(character => {
+    keys = Object.keys(character.sprites.animations)
+    keys.forEach(key => {
+        character.sprites.animations[key].forEach(animation => {
+            // console.log(animation);
+            AssetLoader.queueLoad("assets/characters/" + animation);
+        });
+    })
+});
+AssetLoader.queueLoad("assets/backgroundpage.jpg");
+AssetLoader.queueLoad("assets/ground1.png");
+AssetLoader.queueLoad("assets/ground1_2.png");
+AssetLoader.queueLoad("assets/ground2.png");
+AssetLoader.queueLoad("assets/missing.png");
+// AssetLoader.queueLoad("assets/bread.png");

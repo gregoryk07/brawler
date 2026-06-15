@@ -9,6 +9,9 @@ var fpsLimit = 30;
 var runLoop = true;
 let prevfps = fpsLimit;
 
+const canvas = $("#main_canvas");
+const canvas_ctx = canvas.getContext("2d");
+
 function gameLoop(timestamp) {
     var interval = 1000 / fpsLimit;
 	// 1. Calculate how much time has passed since the last frame
@@ -23,6 +26,12 @@ function gameLoop(timestamp) {
 	}
 	// 2. If enough time has passed, run the frame
 	if (elapsed >= interval) {
+		canvas.width = window.innerWidth;
+		canvas.height = window.innerHeight;
+		
+		canvas_ctx.imageSmoothingEnabled = false;
+		canvas_ctx.mozImageSmoothingEnabled = false;
+		canvas_ctx.webkitImageSmoothingEnabled = false;
 		// Adjust lastTime to the current timestamp
 		// Subtracting the "overflow" (elapsed % interval) helps maintain 
 		// a consistent rhythm even if frames aren't perfectly timed.
@@ -32,6 +41,13 @@ function gameLoop(timestamp) {
 		
 		// update(deltaTime);
 		// render();
+		canvas_ctx.clearRect(0, 0, canvas.width, canvas.height);
+		// canvas_ctx.beginPath();
+		// canvas_ctx.fillStyle = "lightblue";
+		// canvas_ctx.rect(0, 0, canvas.width, canvas.height);
+		// canvas_ctx.fill();
+		// canvas_ctx.closePath();
+		canvas_ctx.drawImage(AssetLoader.Assets["assets/backgroundpage.jpg"], 0, 0, canvas.width, canvas.height);
 
 		gameobjects.forEach((el) => {
 			el.update({"deltaTime" : deltaTime});
@@ -61,7 +77,11 @@ function gameLoop(timestamp) {
 }
 // a = new gameobject(); 
 // a.characterid = 0
-requestAnimationFrame(gameLoop);
+addEventListener("assets_loaded", () => {
+    // console.log("ASSETS LOADED!");
+	requestAnimationFrame(gameLoop);
+});
+AssetLoader.loadAssets();
 
 velocity = 50;
 posx = 0;

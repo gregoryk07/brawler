@@ -14,6 +14,8 @@ class gameobject{
         x: 0,
         y: 0
     };
+    width = 128;
+    height = 128;
     facing = {
 
     }
@@ -50,29 +52,52 @@ class gameobject{
             Math.pow(this.velocity.x, 2) + Math.pow(this.velocity.y, 2)
         ), this.position.x+64, this.position.y+64, "VELOCITY", "red", true);
 
-        this.renderSelf();
+        this.renderSelf(canvas_ctx);
     }
 
-    renderSelf(){
-        var self = $("#gameobject-" + this.id)
-        if(self == null){
-            $("#sprites").innerHTML += "<div id=\"gameobject-" + this.id + "\" class=\"characters\">";
-            self = $("#gameobject-" + this.id);
-            self.appendChild(this.#nicknameObj);
-        }
-        this.#nicknameObj.style.display = this.showNickname ? "inline-block" : "none";
-        // console.log(self);
+    renderSelf(ctx){
+        // var self = $("#gameobject-" + this.id)
+        // if(self == null){
+        //     $("#sprites").innerHTML += "<div id=\"gameobject-" + this.id + "\" class=\"characters\">";
+        //     self = $("#gameobject-" + this.id);
+        //     self.appendChild(this.#nicknameObj);
+        // }
+        // this.#nicknameObj.style.display = this.showNickname ? "inline-block" : "none";
+        // // console.log(self);
 
-        self.style.transform = "translate(" + this.position.x + "px, -" + this.position.y + "px)";
+        // self.style.transform = "translate(" + this.position.x + "px, -" + this.position.y + "px)";
 
-        if(this.characterid != -1)
-        {
-            self.style.backgroundSize = "128px 128px";
-            self.style.imageRendering = "pixelated";
-            self.style.backgroundImage = "url('assets/characters/" + characters[this.characterid].
+        // if(this.characterid != -1)
+        // {
+        //     self.style.backgroundSize = "128px 128px";
+        //     self.style.imageRendering = "pixelated";
+        //     self.style.backgroundImage = "url('assets/characters/" + characters[this.characterid].
+        //     sprites.animations[this.selectedAnimation]
+        //     [Math.min(characters[this.characterid].sprites.animations[this.selectedAnimation].length-1, Math.floor(this.animationFrame/this.animationFrameTimeSpan))] + "')"
+        // }
+        ctx.beginPath();
+        ctx.drawImage(AssetLoader.Assets['assets/characters/' + characters[this.characterid].
             sprites.animations[this.selectedAnimation]
-            [Math.min(characters[this.characterid].sprites.animations[this.selectedAnimation].length-1, Math.floor(this.animationFrame/this.animationFrameTimeSpan))] + "')"
-        }
+            [Math.min(characters[this.characterid].sprites.animations[this.selectedAnimation].length-1, Math.floor(this.animationFrame/this.animationFrameTimeSpan))]],
+            this.position.x, canvas.height - this.position.y - this.height, this.width, this.height);
+            // console.log(characters[this.characterid].
+            //     sprites.animations[this.selectedAnimation]
+            //     [Math.min(characters[this.characterid].sprites.animations[this.selectedAnimation].length-1, Math.floor(this.animationFrame/this.animationFrameTimeSpan))])
+        ctx.closePath();
+        let nicknameSize = 20;
+        ctx.font = (nicknameSize + "px sans-serif");
+        let _nicknameLength = ctx.measureText(this.nickname.toUpperCase());
+        ctx.beginPath();
+        ctx.rect(this.position.x + (this.width/2) - (_nicknameLength.width / 2), canvas.height - this.position.y - this.height - 40, _nicknameLength.width, 20);
+        console.log([this.position.x + (this.width/2) - (_nicknameLength.width / 2), canvas.height - this.position.y - this.height - 40, _nicknameLength.width, 20])
+        // ctx.global_alpha = 0.5;
+        ctx.fillStyle = "black";
+        ctx.fill();
+        // ctx.global_alpha = 1;
+        
+        ctx.closePath();
+        ctx.fillStyle = "white";
+        ctx.fillText(this.nickname.toUpperCase(), this.position.x + (this.width/2) - (_nicknameLength.width / 2), canvas.height - this.position.y - this.height - 20);
     }
 
     characterid = -1;

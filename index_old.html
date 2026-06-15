@@ -4,39 +4,90 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Brawler</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="importfonts.css">
+    <link rel="stylesheet" href="slider.css">
+
     <script src="dataset.js"></script>
     <script src="gameobject.js"></script>
-    <script src="main.js"></script>
-    <link rel="stylesheet" href="style_old.css">
     <script src="drawVector.js"></script>
+    <script src="version.js"></script>
+    <script src="particlesystem.js"></script>
+    <script src="slider.js"></script>
 </head>
 <body>
-    <div id="serverList">
-        <h1>Choose a server</h1>
-        <div id="serverlistsection">
-            <div>
-                <h2>Official servers</h2>
-                <ul id="officialserverlist" class="serverlist_ul">
-
-                </ul>
-            </div>
-            <div>
-                <h2>Custom servers</h2>
-                <ul id="customserverlist" class="serverlist_ul">
-                    
-                </ul>
-            </div>
-            <button class="chooseservermenubtn" id="chooseservermenubtn_connect" onclick="connectToServer()">Connect to server</button>
-            <div class="chooseservermenubtn_section">
-                <button class="chooseservermenubtn" onclick="alert('COMMING SOON')">Modify community servers</button>
-                <button class="chooseservermenubtn" onclick="alert('COMMING SOON')">Add community server</button>
-            </div>
-            <button class="chooseservermenubtn" id="chooseservermenubtn_settings" onclick="alert('COMMING SOON')">Settings</button>
-            <button class="chooseservermenubtn" id="chooseservermenubtn_credits" onclick="alert('COMMING SOON')">Credits</button>
+    <div id="modal" style="display: none;"></div>
+    <main id="mainmenucontainer">
+        <h1>Brawler</h1>
+        <nav id="mainmenu">
+            <button onclick="mainPlayOnline()">Play online</button>
+            <button onclick="alert('COMING SOON')">Open map editor</button>
+            <button onclick="menuSettingsMenu()">Settings</button>
+            <button onclick="mainCredits()">Credits</button>
+            <button onclick="window.open('https://github.com/gregoryk07/brawler')">Open on GitHub</button>
+        </nav>
+        <nav id="servermenu">
+            <button onclick="serverMenuPlayOfficial()"><span>Join official server</span></button>
+            <button onclick="serverMenuPlayCustom()"><span>Join community server</span></button>
+            <button onclick="alert('COMING SOON')"><span>Manage community servers</span></button>
+        </nav>
+        <nav id="officialservers" class="serverlistmenu">
+            
+        </nav>
+        <nav id="customservers" class="serverlistmenu">
+            
+        </nav>
+        <div id="serverdetails">
+            <p id="servername"></p>
+            <p id="serverregion"></p>
+            <p id="preciseregion"></p>
+            <p id="serveraddress"></p>
+            <p id="serversecure"></p>
         </div>
-    </div>
+        <nav id="creditsmenu">
+            <ul>
+                <li>gregoryk07 - coding</li>
+                <li>Macedoniix - artwork</li>
+            </ul>
+        </nav>
+        <nav id="settings">
+            <button onclick="settingsMenuControls()"><span>Controls</span></button>
+            <button onclick="alert('COMMING SOON')"><span>Sounds</span></button>
+            <button id="changenicknamebtn" onclick="setNicknameModal()"><span>Update nickname</span></button>
+            
+            <!-- <input oninput="updateSlider(this)" label="TEST SLIDER" type="range" name="" id="" min="0" max="10" value="5"> -->
+        </nav>
+        <nav id="soundsettings">
+        </nav>
+        <nav id="controlsettings" class="secondaryMenu">
+            <button id="btn_rebind_dpad-left" onclick="startRebind('dpad-left')"><span></span></button>
+            <button id="btn_rebind_dpad-right" onclick="startRebind('dpad-right')"><span></span></button>
+            <button id="btn_rebind_dpad-up" onclick="startRebind('dpad-up')"><span></span></button>
+            <button id="btn_rebind_dpad-down" onclick="startRebind('dpad-down')"><span></span></button>
+            <button id="btn_rebind_jump" onclick="startRebind('jump')"><span></span></button>
+            <button id="btn_rebind_throw" onclick="startRebind('throw')"><span></span></button>
+            <button id="btn_rebind_menu-back" onclick="startRebind('menu-back')"><span></span></button>
+            <button id="btn_rebind_menu-submit" onclick="startRebind('menu-submit')"><span></span></button>
+            <button id="btn_rebind_open-chat" onclick="startRebind('open-chat')"><span></span></button>
+        </nav>
+    </main>
+    
+    
+    
     <div id="stats">FPS: </div>
     <div id="sprites"></div>
+    <div id="chatbox">
+        <div id="chatcontents"></div>
+        <div id="chatinputsection">
+            <input type="text" name="" id="chatmsg" onclick="openChat()">
+            <input type="button" value="SEND" id="chatsendbtn" onclick="sendChatMSG()" style="cursor: pointer;">
+        </div>
+    </div>
 </body>
+    <script src="modal.js"></script>
+<script src="mainmenu.js"></script>
 <script src="netcode.js"></script>
+<script src="input.js"></script>
+<script src="settings.js"></script>
+<script src="main.js"></script>
 </html>

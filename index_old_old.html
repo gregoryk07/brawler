@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brawler</title>
+    <script src="dataset.js"></script>
+    <script src="gameobject.js"></script>
+    <script src="main.js"></script>
+    <link rel="stylesheet" href="style_old.css">
+    <script src="drawVector.js"></script>
+</head>
+<body>
+    <div id="serverList">
+        <h1>Choose a server</h1>
+        <div id="serverlistsection">
+            <div>
+                <h2>Official servers</h2>
+                <ul id="officialserverlist" class="serverlist_ul">
+
+                </ul>
+            </div>
+            <div>
+                <h2>Custom servers</h2>
+                <ul id="customserverlist" class="serverlist_ul">
+                    
+                </ul>
+            </div>
+            <button class="chooseservermenubtn" id="chooseservermenubtn_connect" onclick="connectToServer()">Connect to server</button>
+            <div class="chooseservermenubtn_section">
+                <button class="chooseservermenubtn" onclick="alert('COMMING SOON')">Modify community servers</button>
+                <button class="chooseservermenubtn" onclick="alert('COMMING SOON')">Add community server</button>
+            </div>
+            <button class="chooseservermenubtn" id="chooseservermenubtn_settings" onclick="alert('COMMING SOON')">Settings</button>
+            <button class="chooseservermenubtn" id="chooseservermenubtn_credits" onclick="alert('COMMING SOON')">Credits</button>
+        </div>
+    </div>
+    <div id="stats">FPS: </div>
+    <div id="sprites"></div>
+</body>
+<script src="netcode.js"></script>
+</html>
