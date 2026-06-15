@@ -60,20 +60,22 @@ var Input = {
     },
     handleInputKeyboardDown(e){
         // console.log(e.code);
-        if(ismodalshown && e.code == "Enter"){
-            // console.warn($("#modalbtn").getAttribute("onclick"));
-            $("#modalbtn").click();
-            e.preventDefault();
-            return;
-        }
-        if(ismodalshown && ismodalinputshown && e.code != "Escape"){
-            // e.preventDefault();
-            return;
-        }
         if(isRebinding){
             console.log("BIND " + e.code + " TO " + actionToBind);
             bind(e.code);
             e.preventDefault();
+            return;
+        }
+        if(ismodalshown && e.code == "Enter"){
+            // console.warn($("#modalbtn").getAttribute("onclick"));
+            if($("#modalbtn") != null)
+            $("#modalbtn").click();
+            e.preventDefault();
+            hidemodal();
+            return;
+        }
+        if(ismodalshown && ismodalinputshown && e.code != "Escape"){
+            // e.preventDefault();
             return;
         }
         if(Input.settings.keyboard[e.code] == "menu-back" && chatOpened){
