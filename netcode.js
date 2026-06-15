@@ -209,16 +209,18 @@ function connectToServer(reconnect=false){
     socket = new WebSocket(addr);
     
     $("#mainmenucontainer").hidden = true;
+    $("#pausemenucontainer").hidden = true;
+    
     
     socket.onmessage = socketOnMsg
     
     socket.onopen = socketOnOpen;
-
-    socket.onclose = socketOnClose;
     
     socket.onerror = socketOnError;
 
+    socket.onclose = socketOnClose;
 
+    showmodal("Connecting to server<br>"+chosenServer.name + " - " + chosenServer.precise_region);
 }
 var lastPingTime
 var ping = 0;
@@ -229,7 +231,13 @@ function pingServer(){
 
     }
 }
+addEventListener("NETCODE_CONNECTION_SUCCESSFUL", () => {
+    hidemodal(true);
+})
 function socketOnMsg(e) {
+    if(JSON.parse(e.data).action == "information_set" && JSON.parse(e.data).status == "200"){
+        dispatchEvent(new CustomEvent("NETCODE_CONNECTION_SUCCESSFUL"));
+    }
     if(JSON.parse(e.data).action == "ping_reply"){
         ping = Math.abs(lastPingTime - new Date());
     }
@@ -424,6 +432,18 @@ function socketOnClose(e) {
     console.log("SOCKET CLOSE")
     isConnectedToServer = false;
     $("#mainmenucontainer").hidden = false;
+    $("#pausemenucontainer").hidden = true;
+    hidemodal(true);
+    console.log(websocketCloseCodeToReasonText(e.code))
+    if(websocketCloseCodeToReasonText(e.code).length > 0){
+        let disconnectmessage = [
+            "Disconnected from server"
+        ]
+        if(websocketCloseCodeToReasonText(e.code).length > 0){
+            disconnectmessage[disconnectmessage.length] = websocketCloseCodeToReasonText(e.code);
+        }
+        showmodal(disconnectmessage.join("<br>"), true)
+    }
 }
 function socketOnError(e) {
     console.error(e);
@@ -431,14 +451,46 @@ function socketOnError(e) {
     console.log("SOCKET ERROR")
     isConnectedToServer = false;
     $("#mainmenucontainer").hidden = false;
+    $("#pausemenucontainer").hidden = true;
+    hidemodal(true);
+    if(!e.wasClean){
+        let disconnectmessage = [
+            "Connection error"
+        ]
+        showmodal(disconnectmessage.join("<br>"), true)
+    }
 }
 var reconnectMaxTries = 5;
 var reconnectCurrentTry = 0;
 function disconnectFromServer(){
     isConnectedToServer = false;
-    socket.close();
-    socketOnClose();
+    socket.close(1000);
+    // socketOnClose();
     closeAllMenus();
 }
 updateServerList();
 // connectToServer()
+function websocketCloseCodeToReasonText(code){
+    closeCodes = {
+        // 1000 : "Normal Closure",
+        1001: "Going Away",
+        1002: "Protocol Error",
+        1003: "Unsuported Data",
+        1004: "Reserved",
+        1005: "No Status Received",
+        1006: "Connection lost",
+        1007: "Invalid Payload Data",
+        1008: "Policy Violation",
+        1009: "Message Too Big",
+        1010: "Required extension not supported",
+        1011: "Internal Error",
+        1012: "Server Restart",
+        1013: "Server is under heavy load",
+        1014: "Bad Gateway",
+        1015: "TLS/SSL Handshake Failure"
+    }
+    if(closeCodes[code] != undefined && closeCodes[code] != null){
+        return closeCodes[code];
+    }
+    return "";
+}

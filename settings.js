@@ -50,3 +50,39 @@ function saveNickname(){
 function saveSettings(){
     saveKeybinds()
 }
+var testEnviroment = {
+    activate(){
+        testEnviroment.testEnviromentData.isOn = true;
+        testEnviroment.save();
+        location.reload();
+    },
+    deactivate(){
+        testEnviroment.testEnviromentData.isOn = false;
+        testEnviroment.save();
+        location.reload();
+    },
+    save(){
+        Cookies.setCookie("testEnviroment", JSON.stringify(testEnviroment.testEnviromentData));
+    },
+    changeServer(server){
+        testEnviroment.testEnviromentData.server = server;
+        testEnviroment.save();
+        location.reload();
+    },
+    loadSettings(){
+        let testEnviromentJSON = Cookies.getCookie("testEnviroment")
+        if(testEnviromentJSON.length > 0)
+        {
+            testEnviroment.testEnviromentData = JSON.parse(testEnviromentJSON);
+        }
+        if(testEnviroment.testEnviromentData.isOn){
+            console.log("%cTEST ENVIROMENT IS ON", "background: black; color: white; font-size: xx-large; font-weight: bold; padding: 20px; margin: 20px;")
+            chooseAndConnectToServer(testEnviroment.testEnviromentData.server)
+        }
+    },
+    testEnviromentData: {
+        isOn: false,
+        server: officialServers[1]
+    }
+}
+testEnviroment.loadSettings();

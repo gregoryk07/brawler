@@ -227,6 +227,7 @@ function mainCredits(){
 var mainmenuoptions = [];
 addEventListener("dpad-down", (e) => {
     handleMainMenu({ direction: {x: 0, y: -1} })
+    handlePauseMenu({ direction: {x: 0, y: -1} })
 })
 addEventListener("dpad-left", (e) => {
     handleMainMenu({ direction: {x: -1, y: 0} })
@@ -236,14 +237,17 @@ addEventListener("dpad-right", (e) => {
 })
 addEventListener("dpad-up", (e) => {
     handleMainMenu({ direction: {x: 0, y: 1} })
+    handlePauseMenu({ direction: {x: 0, y: 1} })
 })
 addEventListener("menu-submit", (e) => {
     // console.log("SUBMIT")
     handleMainMenu({ click: true })
+    handlePauseMenu({ click: true })
 })
 addEventListener("menu-back", (e) => {
     // console.log("SUBMIT")
     handleMainMenu({ back: true })
+    handlePauseMenu({ back: true })
 })
 var isMainMenuVisible = true;
 function handleMainMenu({ direction = {x: 0, y: 0}, click = false, back = false } = {}){
@@ -414,6 +418,81 @@ function hidePauseMenu(){
     isPauseMenuVisible = false;
     $("#pausemenucontainer").hidden = true;
 }
-function handlePauseMenu() {
+function handlePauseMenu({ direction = {x: 0, y: 0}, click = false, back = false } = {}) {
+    if(!isMainMenuVisible){
+        if(back){
+            $("#pausemenucontainer").hidden =  !$("#pausemenucontainer").hidden;
+            let btns = $("#pausemenubtns").children;
+            for (let i = 0; i < btns.length; i++) {
+                const element = btns[i];
+                element.classList.remove("selectedMenuController")
+            }
+        }
+    }
+    else{
+        return;
+    }
     isPauseMenuVisible = !$("#pausemenucontainer").hidden;
+    if(direction.x > 0) direction.x = 1
+    if(direction.x < 0) direction.x = -1
+    if(direction.y > 0) direction.y = 1
+    if(direction.y < 0) direction.y = -1
+
+    let handlemainmenu_menu = "pausemenubtns"
+    let mainmenubtns = $("#"+handlemainmenu_menu).children;
+    lastmainmenubtn = 0;
+    for (let i = 0; i < mainmenubtns.length; i++) {
+        if(mainmenubtns[i].classList.contains("selectedMenuController")){
+            mainmenubtns[i].classList.remove("selectedMenuController");
+            lastmainmenubtn = i;
+        }
+    }
+    
+    
+    // console.log(lastmainmenubtn)
+    // if(lastmainmenubtn < 0) lastmainmenubtn = 0;
+    if(direction.y == 1){
+        lastmainmenubtn -= 1;
+        if(lastmainmenubtn < 0){
+            lastmainmenubtn = mainmenubtns.length - 1;
+        }
+    }
+    if(direction.y == -1){
+        lastmainmenubtn += 1;
+        if(lastmainmenubtn > mainmenubtns.length - 1){
+            lastmainmenubtn = 0;
+        }
+    }
+    if(direction.x == 1){
+        if(mainmenubtns[lastmainmenubtn].tagName.toLowerCase() == "input" && mainmenubtns[lastmainmenubtn].type == "range"){
+            mainmenubtns[lastmainmenubtn].value = Number(mainmenubtns[lastmainmenubtn].value) + 1;
+            mainmenubtns[lastmainmenubtn].dispatchEvent(new Event("input"))
+        }
+    }
+    if(direction.x == -1){
+        if(mainmenubtns[lastmainmenubtn].tagName.toLowerCase() == "input" && mainmenubtns[lastmainmenubtn].type == "range"){
+            mainmenubtns[lastmainmenubtn].value = Number(mainmenubtns[lastmainmenubtn].value) - 1;
+            mainmenubtns[lastmainmenubtn].dispatchEvent(new Event("input"))
+        }
+    }
+    // console.warn(lastmainmenubtn)
+    mainmenubtns[lastmainmenubtn].classList.add("selectedMenuController");
+
+    mainmenubtns[lastmainmenubtn].dispatchEvent(new MouseEvent('mouseover', { 'view': window, 'bubbles': true, 'cancelable': true }));
+    // console.error(mainmenubtns[lastmainmenubtn]);
+    if(click)
+    {
+        // console.log("CLICK")
+        // console.log(mainmenuoptions)
+        // if(mainmenubtns[lastmainmenubtn].hasAttribute("onclick")){
+        //     eval(mainmenubtns[lastmainmenubtn].getAttribute("onclick"));
+        // }
+        // else{
+            
+            mainmenubtns[lastmainmenubtn].click();
+            handleMainMenu();
+        // }
+    }
+
+    return;
 }

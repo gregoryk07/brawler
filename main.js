@@ -69,6 +69,34 @@ function gameLoop(timestamp) {
 		particleSystem.runParticleLoop({deltaTime: deltaTime});
 
 		$("#chatbox").style.display = isMainMenuVisible ? "none" : "block"
+
+		// TEST ENVIROMENT
+		if(testEnviroment.testEnviromentData.isOn){
+			canvas_ctx.beginPath();
+			canvas_ctx.font = "bold 15px Oswald";
+			let textToDisplay = "TEST ENVIROMENT - SERVER: " + 
+			testEnviroment.testEnviromentData.server.name + 
+			" (" + testEnviroment.testEnviromentData.server.ip.address + ":" + testEnviroment.testEnviromentData.server.ip.port + ")"
+			
+			if(isConnectedToServer){
+				textToDisplay += " - SERVER VERSION: " + serverSettings.version + " - TICKRATE: " + Math.round(1 / serverSettings.tickTime) + "TPS";
+			}
+			textToDisplay += " - MIN SERVER VERSION: " + minServerVersion;
+			let testEnviromentMetrics = canvas_ctx.measureText(textToDisplay)
+			let textToDisplayHeight = testEnviromentMetrics.actualBoundingBoxAscent + testEnviromentMetrics.actualBoundingBoxDescent;
+			canvas_ctx.globalAlpha = 0.4;
+			canvas_ctx.fillStyle = "black";
+			let testEnviromentLabelPadding = 4;
+			canvas_ctx.fillRect(canvas.width / 2 - testEnviromentMetrics.width / 2 - testEnviromentLabelPadding, 0 - testEnviromentLabelPadding, testEnviromentMetrics.width + 2 * testEnviromentLabelPadding, textToDisplayHeight + 2 * testEnviromentLabelPadding);
+			canvas_ctx.fillStyle = "white";
+			canvas_ctx.fillText(textToDisplay, canvas.width / 2 - testEnviromentMetrics.width / 2, textToDisplayHeight);
+			canvas_ctx.globalAlpha = 1
+
+			canvas_ctx.closePath();
+
+		}
+		// END
+
 	}
 
 	// 3. Always request the next frame as fast as the monitor allows
@@ -124,3 +152,6 @@ function runMovement(time = {deltaTime: 0}){
 	moveTo({x: posx, y: posy},{xv: velx, yv: vely});
 }
 updateBindings();
+if(testEnviroment.isOn){
+	chooseAndConnectToServer(testEnviroment.server)
+}

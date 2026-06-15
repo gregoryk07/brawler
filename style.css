@@ -270,3 +270,44 @@ main#mainmenucontainer>h1{
 #mainmenucontainer nav button{
     transform: translateY(-120px);
 }
+#pausemenucontainer{
+    background-color: rgba(0, 0, 0, 0.2);
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+#pausemenucontainer>nav{
+    background-color: rgba(0, 0, 0, 0.6);
+    margin: auto;
+    text-align: center;
+    top: 0;
+    bottom: 0;
+    left: calc((100% - 400px) / 2);
+    right: calc((100% - 400px) / 2);
+    position: fixed;
+    color: white;
+}
+#pausemenucontainer>nav>h2{
+    margin: 35% 0
+}
+#pausemenucontainer>nav>div{
+    display: flex;
+    flex-direction: column;
+}
+#pausemenucontainer>nav>div>button{
+    height: 60px;
+    background: linear-gradient(yellow);
+    background-size: 100% 60px;
+    border: none;
+    background-repeat: no-repeat;
+    background-position: -400px;
+    transition-duration: 200ms;
+    color: white;
+    cursor: pointer;
+}
+#pausemenucontainer>nav>div>button:hover, #pausemenucontainer>nav>div>button.selectedMenuController{
+    background-position: 0;
+    color: black;
+}

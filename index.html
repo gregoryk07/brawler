@@ -55,6 +55,9 @@
             <button onclick="settingsMenuControls()"><span>Controls</span></button>
             <button onclick="alert('COMMING SOON')"><span>Sounds</span></button>
             <button id="changenicknamebtn" onclick="setNicknameModal()"><span>Update nickname</span></button>
+            <button style="border: solid black 2px; font-size: large;"><span>DEVELOPER SETTINGS</span></button>
+            <button onclick="testEnviroment.activate()"><span>ACTIVATE TEST ENVIROMENT</span></button>
+            <button onclick="testEnviroment.deactivate()"><span>DEACTIVATE TEST ENVIROMENT</span></button>
             
             <!-- <input oninput="updateSlider(this)" label="TEST SLIDER" type="range" name="" id="" min="0" max="10" value="5"> -->
         </nav>
@@ -84,6 +87,19 @@
             <input type="text" name="" id="chatmsg" onclick="openChat()">
             <input type="button" value="SEND" id="chatsendbtn" onclick="sendChatMSG()" style="cursor: pointer;">
         </div>
+    </div>
+    <div id="pausemenucontainer" hidden>
+        <nav id="pausemenu">
+            <h2>Pause Menu</h2>
+            <div id="pausemenubtns">
+                <button onclick="hidePauseMenu()"><span>Resume</span></button>
+                <button onclick="setNicknameModal()"><span>Change nickname</span></button>
+                <button onclick="disconnectFromServer()"><span>Disconnect</span></button>
+            <button style="border: solid black 2px; font-size: large;"><span>DEVELOPER SETTINGS</span></button>
+            <button onclick="testEnviroment.activate()"><span>ACTIVATE TEST ENVIROMENT</span></button>
+            <button onclick="testEnviroment.deactivate()"><span>DEACTIVATE TEST ENVIROMENT</span></button>
+            </div>
+        </nav>
     </div>
 </body>
     <script src="modal.js"></script>
