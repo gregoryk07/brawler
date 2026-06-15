@@ -1,4 +1,21 @@
+var particles = new Set();
+class particle{
+    pos = {
+        x: 0,
+        y: 0
+    }
+    direction = 0;
+    spread = 30;
+    speed = 10;
+    lifetime = 1000;
+    asset= "assets/particles/cloud.png";
+    assetsize= 32;
+
+}
 const particleSystem = {
+    particlesList: [
+        "cloud.png"
+    ],
     async sendParticleServerRequest({count = 10, pos= {x: 0, y: 0}, direction= 0 /* deg */, speed= 10, spread= 30 /* degrees*/, lifetime= 1000 /* ms */, asset= "assets/particles/cloud.png", assetsize= 32} = {}){
         if(isConnectedToServer){
             packet = {
