@@ -24,7 +24,7 @@ class gameobject{
         // console.log(Math.floor(this.animationFrame/this.animationFrameTimeSpan));
         // animations
         if(this.characterid != -1){
-            this.animationFrame+= time.deltaTime;
+            this.animationFrame+= time.deltaTime * Math.sqrt(Math.pow(this.velocity.x, 2) + Math.pow(this.velocity.y, 2));
             while(characters[this.characterid].sprites.animations[this.selectedAnimation].length * this.animationFrameTimeSpan < this.animationFrame){
                 this.animationFrame -= characters[this.characterid].sprites.animations[this.selectedAnimation].length * this.animationFrameTimeSpan;
                 // console.warn(this.animationFrame);
