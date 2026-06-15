@@ -101,7 +101,7 @@ const particleSystem = {
         // }
         // http.send();
         for (let i = 0; i < count; i++) {
-            console.log(i);
+            // console.log(i);
             let p = new particle();
             p.pos = {x: pos.x, y: pos.y};
             p.direction = direction + (Math.random() - 0.5) * spread;;
