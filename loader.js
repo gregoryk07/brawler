@@ -31,6 +31,33 @@ AssetLoader = {
             }
             _img.src = _asset;
         }
+    },
+    getResource: {
+        character(name){
+            if(AssetLoader.Assets["assets/characters/" + name] != null){
+                return AssetLoader.Assets["assets/characters/" + name];
+            }
+            else{
+                return AssetLoader.Assets["assets/missing.png"];
+            }
+        },
+        particle(name){
+            if(AssetLoader.Assets["assets/particles/" + name] != null){
+                return AssetLoader.Assets["assets/particles/" + name];
+            }
+            else{
+                return AssetLoader.Assets["assets/missing.png"];
+            }
+        },
+        raw(name){
+            if(name[0] == "/") name = name.substring(1);
+            if(AssetLoader.Assets[name] != null){
+                return AssetLoader.Assets[name];
+            }
+            else{
+                return AssetLoader.Assets["assets/missing.png"];
+            }
+        }
     }
 }
 addEventListener("assets_loaded", () => {
