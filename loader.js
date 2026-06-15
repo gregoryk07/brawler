@@ -34,6 +34,8 @@ AssetLoader = {
     },
     getResource: {
         character(name){
+            
+            if(name[0] == "/") name = name.substring(1);
             if(AssetLoader.Assets["assets/characters/" + name] != null){
                 return AssetLoader.Assets["assets/characters/" + name];
             }
@@ -42,6 +44,8 @@ AssetLoader = {
             }
         },
         particle(name){
+            
+            if(name[0] == "/") name = name.substring(1);
             if(AssetLoader.Assets["assets/particles/" + name] != null){
                 return AssetLoader.Assets["assets/particles/" + name];
             }
