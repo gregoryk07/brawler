@@ -74,6 +74,12 @@ var Input = {
             hidemodal();
             return;
         }
+        if(ismodalshown && e.code == "Escape"){
+            // console.warn($("#modalbtn").getAttribute("onclick"));
+            e.preventDefault();
+            hidemodal();
+            return;
+        }
         if(ismodalshown && ismodalinputshown && e.code != "Escape"){
             // e.preventDefault();
             return;
