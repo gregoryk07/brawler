@@ -16,9 +16,7 @@ class gameobject{
     };
     width = 128;
     height = 128;
-    facing = {
-
-    }
+    facing = 1;
     velVector = drawVector(0, 0, 0, 0, "red", "VELOCITY", true);
     animationFrame = 0;
     update(time = {deltaTime: 0.1}){
@@ -36,6 +34,25 @@ class gameobject{
         //INTERPOLATION BASED ON VELOCITY GIVEN BY SERVER
         this.position.x += this.velocity.x * time.deltaTime;
         this.position.y += this.velocity.y * time.deltaTime;
+        if(this.velocity.x != 0){
+            this.facing = (this.velocity.x) / Math.abs(this.velocity.x);
+        }
+        if(Math.abs(this.velocity.x) > 0){
+            if(this.facing < 0){
+                this.selectedAnimation = "walk_left";
+            }
+            else{
+                this.selectedAnimation = "walk_right";
+            }
+        }
+        else{
+            if(this.facing < 0){
+                this.selectedAnimation = "idle_left";
+            }
+            else{
+                this.selectedAnimation = "idle_right";
+            }
+        }
 
 
         // let angleInDegrees = (180 / Math.PI) * Math.asin(this.velocity.y / Math.sqrt(Math.pow(this.velocity.x, 2) + Math.pow(this.velocity.y, 2)));
@@ -76,28 +93,29 @@ class gameobject{
         //     [Math.min(characters[this.characterid].sprites.animations[this.selectedAnimation].length-1, Math.floor(this.animationFrame/this.animationFrameTimeSpan))] + "')"
         // }
         ctx.beginPath();
-        ctx.drawImage(AssetLoader.Assets['assets/characters/' + characters[this.characterid].
+        ctx.drawImage(AssetLoader.getResource.character(characters[this.characterid].
             sprites.animations[this.selectedAnimation]
-            [Math.min(characters[this.characterid].sprites.animations[this.selectedAnimation].length-1, Math.floor(this.animationFrame/this.animationFrameTimeSpan))]],
+            [Math.min(characters[this.characterid].sprites.animations[this.selectedAnimation].length-1, Math.floor(this.animationFrame/this.animationFrameTimeSpan))]),
             this.position.x, canvas.height - this.position.y - this.height, this.width, this.height);
             // console.log(characters[this.characterid].
             //     sprites.animations[this.selectedAnimation]
             //     [Math.min(characters[this.characterid].sprites.animations[this.selectedAnimation].length-1, Math.floor(this.animationFrame/this.animationFrameTimeSpan))])
         ctx.closePath();
         let nicknameSize = 20;
-        ctx.font = (nicknameSize + "px sans-serif");
+        ctx.font = (nicknameSize + "px Oswald");
         let _nicknameLength = ctx.measureText(this.nickname.toUpperCase());
+        let _nicknameHeight = _nicknameLength.actualBoundingBoxDescent + _nicknameLength.actualBoundingBoxAscent
         ctx.beginPath();
-        ctx.rect(this.position.x + (this.width/2) - (_nicknameLength.width / 2), canvas.height - this.position.y - this.height - 40, _nicknameLength.width, 20);
-        console.log([this.position.x + (this.width/2) - (_nicknameLength.width / 2), canvas.height - this.position.y - this.height - 40, _nicknameLength.width, 20])
-        // ctx.global_alpha = 0.5;
+        let backgroundPadding = 2;
+        ctx.globalAlpha = 0.7;
+        ctx.rect(this.position.x + (this.width/2) - (_nicknameLength.width / 2) - backgroundPadding, canvas.height - this.position.y - this.height - 40 - backgroundPadding, _nicknameLength.width + (backgroundPadding * 2), _nicknameHeight + (backgroundPadding * 2));
         ctx.fillStyle = "black";
         ctx.fill();
-        // ctx.global_alpha = 1;
+        ctx.globalAlpha = 1;
         
         ctx.closePath();
         ctx.fillStyle = "white";
-        ctx.fillText(this.nickname.toUpperCase(), this.position.x + (this.width/2) - (_nicknameLength.width / 2), canvas.height - this.position.y - this.height - 20);
+        ctx.fillText(this.nickname.toUpperCase(), this.position.x + (this.width/2) - (_nicknameLength.width / 2), canvas.height - this.position.y - this.height - 40 + _nicknameHeight);
     }
 
     characterid = -1;
@@ -121,9 +139,9 @@ class gameobject{
         gameobjects.add(this);
     }
     destroy(){
-        $("#gameobject-" + this.id).outerHTML = "";
+        // $("#gameobject-" + this.id).outerHTML = "";
         gameobjects.delete(this);
-        console.warn(this.velVector);
+        // console.warn(this.velVector);
         removeVector(this.velVector);
         console.log("DESTROYED");
     }
