@@ -95,6 +95,8 @@ function gameLoop(timestamp) {
 			canvas_ctx.closePath();
 
 		}
+
+		Input.drawControlsGUI(canvas_ctx);
 		// END
 
 	}
@@ -116,8 +118,8 @@ posx = 0;
 posy = 0;
 
 function runMovement(time = {deltaTime: 0}){
-	velx = 0
-	vely = 0
+	let velx = 0
+	let vely = 0
 	if(!ismodalshown && !isPauseMenuVisible && !chatOpened)
 	{
 		// data available: serverSettings.tickTime - interval between server ticks in seconds
@@ -133,7 +135,7 @@ function runMovement(time = {deltaTime: 0}){
 		vely += Number(Input.inputData["dpad-up"]) * velocity;
 		
 
-		vectorlength = Math.sqrt(Math.pow(velx, 2) + Math.pow(vely, 2));
+		let vectorlength = Math.sqrt(Math.pow(velx, 2) + Math.pow(vely, 2));
 
 		if (vectorlength > 0) {
 			const desiredlength = Math.min(velocity, vectorlength);

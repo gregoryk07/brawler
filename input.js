@@ -11,12 +11,26 @@ function runInput(){
     console.log("INPUT");
 }
 var Input = {
+    controlsGUI: true,
+    GUISettings: {
+        margin: {
+            left: 10,
+            right: 10,
+            top: 10,
+            bottom: 10
+        },
+        size: 25,
+        color: "black",
+        opacity: 0.5,
+        knobRadius: 50,
+        knobSize: 10
+    },
     inputData: 
     {
-        "dpad-left": false,
-        "dpad-right": false,
-        "dpad-up": false,
-        "dpad-down": false,
+        "dpad-left": 0,
+        "dpad-right": 0,
+        "dpad-up": 0,
+        "dpad-down": 0,
         "jump": false,
         "throw": false,
         "menu-back": false,
@@ -57,6 +71,60 @@ var Input = {
             "KeyT": "open-chat",
             "Enter": "menu-submit"
         }
+    },
+    drawControlsGUI(ctx){
+        if(!this.drawControlsGUI) return;
+
+        ctx.beginPath();
+        ctx.fillStyle = this.GUISettings.color;
+        let size = canvas.width * this.GUISettings.size / 100
+        ctx.roundRect(
+            this.GUISettings.margin.left,
+            canvas.height - this.GUISettings.margin.bottom,
+            size,
+            -size,
+            size * this.GUISettings.knobRadius / 100
+        );
+        ctx.globalAlpha = this.GUISettings.opacity;
+        ctx.fill();
+        ctx.closePath();
+        ctx.beginPath();
+
+
+        ctx.fillStyle = "white";
+        ctx.strokeStyle = "gray";
+        
+        let knobSize = canvas.width * this.GUISettings.knobSize / 100
+        let moveKnobX = ((size - knobSize) / 2) * (this.inputData["dpad-right"] - this.inputData["dpad-left"]);
+        let moveKnobY = ((size - knobSize) / 2) * (this.inputData["dpad-down"] - this.inputData["dpad-up"]);
+        
+        let vectorlength = Math.sqrt(Math.pow(moveKnobX, 2) + Math.pow(moveKnobY, 2));
+
+        let maxLength = ((size - knobSize) / 2)
+		if (vectorlength > 0) {
+            // console.log(moveKnobX, moveKnobY)
+            const desiredlength = Math.min(maxLength, vectorlength);
+            // console.log(desiredlength)
+			
+			const scale = desiredlength / vectorlength;
+			
+			moveKnobX *= scale;
+			moveKnobY *= scale;
+            // console.log(moveKnobX, moveKnobY)
+		}
+        
+        ctx.roundRect(
+            this.GUISettings.margin.left + (size - knobSize) / 2 + moveKnobX,
+            canvas.height - this.GUISettings.margin.bottom - (size - knobSize) / 2 + moveKnobY,
+            knobSize,
+            -knobSize,
+            size * this.GUISettings.knobRadius / 100
+        )
+        ctx.fill();
+
+        ctx.globalAlpha = 1;
+        ctx.closePath();
+
     },
     handleInputKeyboardDown(e){
         // console.log(e.code);
@@ -202,6 +270,84 @@ function updateBindings(){
 onkeydown = Input.handleInputKeyboardDown;
 onkeyup = Input.handleInputKeyboardUp;
 
+addEventListener("touchmove", (e) => {
+    dpadDesired = {
+        right: 0,
+        left: 0,
+        up: 0,
+        down: 0
+    }
+    for (let i = 0; i < e.touches.length; i++) {
+        const touch = e.touches[i];
+        let size = canvas.width * Input.GUISettings.size / 100
+        // ctx.roundRect(
+        //     this.GUISettings.margin.left,
+        //     canvas.height - this.GUISettings.margin.bottom,
+        //     size,
+        //     -size,
+        //     size * this.GUISettings.knobRadius / 100
+        // );
+        let touchpadding = size * 0.2;
+        if(
+            touch.clientX > Input.GUISettings.margin.left - touchpadding &&
+            touch.clientX < Input.GUISettings.margin.left + size + touchpadding &&
+            touch.clientY < canvas.height - Input.GUISettings.margin.bottom + touchpadding &&
+            touch.clientY > canvas.height - Input.GUISettings.margin.bottom - size - touchpadding
+        )
+        {
+            // console.log("TOUCHHHHHHH")
+            let centerX = Input.GUISettings.margin.left + size / 2
+            let centerY = canvas.height - Input.GUISettings.margin.bottom - size / 2
+
+            let moveX = -centerX+touch.clientX
+            let moveY = centerY-touch.clientY
+
+
+
+            let vectorlength = Math.sqrt(Math.pow(moveX, 2) + Math.pow(moveY, 2))
+
+            let desiredlength = Math.min(vectorlength, size / 2)
+            
+            console.log(desiredlength, size / 2)
+            moveX *= 1 / (size / 2)
+            moveY *= 1 / (size / 2)
+
+            // console.log(moveX, moveY)
+
+            if(moveX > 0){
+                dpadDesired.right = moveX;
+                dpadDesired.left = 0;
+            }
+
+            if(moveX < 0){
+                dpadDesired.right = 0;
+                dpadDesired.left = -moveX;
+            }
+
+            if(moveY > 0){
+                dpadDesired.up = moveY;
+                dpadDesired.down = 0;
+            }
+
+            if(moveY < 0){
+                dpadDesired.up = 0;
+                dpadDesired.down = -moveY;
+            }
+
+        }
+    }
+    Input.inputData["dpad-up"] = dpadDesired.up
+    Input.inputData["dpad-down"] = dpadDesired.down
+    Input.inputData["dpad-left"] = dpadDesired.left
+    Input.inputData["dpad-right"] = dpadDesired.right
+    // console.log(dpadDesired)
+})
+addEventListener("touchend", (e) => {
+    Input.inputData["dpad-up"]    = 0
+    Input.inputData["dpad-down"]  = 0
+    Input.inputData["dpad-left"]  = 0
+    Input.inputData["dpad-right"] = 0
+})
 // https://stackoverflow.com/questions/9907419/how-to-get-a-key-in-a-javascript-object-by-its-value
 function getKeyByValue(object, value) {
     return Object.keys(object).find(key => object[key] === value);
