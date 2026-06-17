@@ -270,7 +270,12 @@ function updateBindings(){
 onkeydown = Input.handleInputKeyboardDown;
 onkeyup = Input.handleInputKeyboardUp;
 
+addEventListener("touchstart", (e) => {
+    if(document.fullscreenElement == null)
+    $("#main_canvas").requestFullscreen();
+});
 addEventListener("touchmove", (e) => {
+    
     dpadDesired = {
         right: 0,
         left: 0,
