@@ -11,7 +11,7 @@ function runInput(){
     console.log("INPUT");
 }
 var Input = {
-    controlsGUI: true,
+    controlsGUI: false,
     GUISettings: {
         margin: {
             left: 10,
@@ -80,7 +80,7 @@ var Input = {
         }
     },
     drawControlsGUI(ctx){
-        if(!this.drawControlsGUI) return;
+        if(!this.controlsGUI) return;
 
         ctx.beginPath();
         ctx.fillStyle = this.GUISettings.color;
@@ -147,6 +147,7 @@ var Input = {
     },
     handleInputKeyboardDown(e){
         // console.log(e.code);
+        Input.controlsGUI = false;
         if(isRebinding){
             console.log("BIND " + e.code + " TO " + actionToBind);
             bind(e.code);
@@ -308,6 +309,8 @@ addEventListener("touchstart", (e) => {
         }
 
     }
+    
+    Input.controlsGUI = true;
 });
 addEventListener("touchmove", (e) => {
     
