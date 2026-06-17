@@ -272,7 +272,7 @@ onkeyup = Input.handleInputKeyboardUp;
 
 addEventListener("touchstart", (e) => {
     if(document.fullscreenElement == null)
-    $("#main_canvas").requestFullscreen();
+    document.body.requestFullscreen();
 });
 addEventListener("touchmove", (e) => {
     
