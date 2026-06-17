@@ -411,6 +411,7 @@ function handleMainMenu({ direction = {x: 0, y: 0}, click = false, back = false 
 }
 isPauseMenuVisible = false;
 function showPauseMenu(){
+    if(isMainMenuVisible) hidePauseMenu();
     isPauseMenuVisible = true;
     $("#pausemenucontainer").hidden = false;
 }
