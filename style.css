@@ -290,14 +290,14 @@ main#mainmenucontainer>h1{
     color: white;
 }
 #pausemenucontainer>nav>h2{
-    margin: 35% 0
+    margin: 0
 }
 #pausemenucontainer>nav>div{
     display: flex;
     flex-direction: column;
 }
 #pausemenucontainer>nav>div>button{
-    height: 60px;
+    height: 40px;
     background: linear-gradient(yellow);
     background-size: 100% 60px;
     border: none;
