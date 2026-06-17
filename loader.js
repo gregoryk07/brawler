@@ -64,6 +64,7 @@ AssetLoader = {
         }
     }
 }
+AssetLoader.queueLoad("assets/pausemenu_icon.jpg")
 addEventListener("assets_loaded", () => {
     console.log("ASSETS LOADED!");
 });

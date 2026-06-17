@@ -23,7 +23,14 @@ var Input = {
         color: "black",
         opacity: 0.5,
         knobRadius: 50,
-        knobSize: 10
+        knobSize: 10,
+        buttons: {
+            menu: {
+                right: 5,
+                top: 5,
+                size: 5
+            }
+        }
     },
     inputData: 
     {
@@ -123,6 +130,18 @@ var Input = {
         ctx.fill();
 
         ctx.globalAlpha = 1;
+        ctx.closePath();
+
+        ctx.beginPath();
+        ctx.fillStyle = this.GUISettings.color;
+        ctx.drawImage(
+            AssetLoader.getResource.raw("assets/pausemenu_icon.jpg"),
+            canvas.width - this.GUISettings.buttons.menu.right,
+            this.GUISettings.buttons.menu.top,
+            -this.GUISettings.buttons.menu.size * canvas.width / 100,
+            this.GUISettings.buttons.menu.size * canvas.width / 100
+        )
+        ctx.fill();
         ctx.closePath();
 
     },
@@ -273,6 +292,22 @@ onkeyup = Input.handleInputKeyboardUp;
 addEventListener("touchstart", (e) => {
     if(document.fullscreenElement == null)
     document.body.requestFullscreen();
+    // console.log("T")
+    // console.log(e);
+    for (let i = 0; i < e.touches.length; i++) {
+        const touch = e.touches[i];
+        console.log(touch.clientX, canvas.width - Input.GUISettings.buttons.menu.right - Input.GUISettings.buttons.menu.size, canvas.width - Input.GUISettings.buttons.menu.right)
+        if(
+            touch.clientX > canvas.width - Input.GUISettings.buttons.menu.right - (Input.GUISettings.buttons.menu.size * canvas.width / 100) &&
+            touch.clientX < canvas.width - Input.GUISettings.buttons.menu.right &&
+            touch.clientY > Input.GUISettings.buttons.menu.top &&
+            touch.clientY < Input.GUISettings.buttons.menu.top + (Input.GUISettings.buttons.menu.size * canvas.width / 100)
+        ){
+            console.log("MENUU")
+            showPauseMenu();
+        }
+
+    }
 });
 addEventListener("touchmove", (e) => {
     
