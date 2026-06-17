@@ -19,7 +19,7 @@ const officialServers = [
         precise_region: "localhost",
         name: "localhost test server",
         ip: {
-            address: "localhost",
+            address: "127.0.0.1",
             port: 8765,
             isSecure: false
         }
